@@ -1,6 +1,7 @@
 # Import PSReadLine
 if ($host.Name -eq 'ConsoleHost') {
     Import-Module PSReadLine
+    Import-Module -Name Terminal-Icons
 }
 
 # With these bindings, up arrow/down arrow will work like PowerShell/cmd if the current command line is blank.
