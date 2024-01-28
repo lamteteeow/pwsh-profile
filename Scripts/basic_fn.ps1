@@ -10,11 +10,11 @@ function reload { & $profile }
 # Create empty file
 function touch ($file) { "" | Out-File $file -Encoding ascii }
 
-# List files with exa in long format and show all files
-function ll { eza -l -a }
+# List files with lsd in long format and show all files
+function ll { lsd -l -a }
 
 # List files with exa in tree format
-function lt { eza -l --tree }
+function lt { lsd -l --tree }
 
 # Convert to JSON
 function jj { $P | ConvertTo-Json -Depth 100 }
