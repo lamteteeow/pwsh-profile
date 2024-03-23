@@ -4,6 +4,12 @@
 # Lazy default Git add, commit, and push
 function lagit { git add .; git commit -a -m "lazy commit $args"; git push origin main; }
 
+# Lazy Git cache clear
+function lacache { git rm -r --cached .; git add .; git commit -m "clear cache"; }
+
+# Lazy Git revert to last commit
+function larevert { git reset --hard HEAD~1;}
+
 # Reload profile
 function reload { & $profile }
 
