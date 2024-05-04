@@ -27,3 +27,28 @@ function jj { $P | ConvertTo-Json -Depth 100 }
 
 # List USB devices
 function lsusb { Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -match '^USB' } | Format-Table -Wrap -AutoSize }
+
+# Find files
+function ff($name) {
+    Get-ChildItem -recurse -filter "*${name}*" -ErrorAction SilentlyContinue | ForEach-Object {
+        Write-Output "$($_.directory)\$($_)"
+    }
+}
+
+# Network Utilities
+function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
+
+# Find and Replace with sed
+function sed($file, $find, $replace) {
+    (Get-Content $file).replace("$find", $replace) | Set-Content $file
+}
+
+# Properties and definition
+function which($name) {
+    Get-Command $name | Select-Object -ExpandProperty Definition
+}
+
+# Kill process
+function pkill($name) {
+    Get-Process $name -ErrorAction SilentlyContinue | Stop-Process
+}
