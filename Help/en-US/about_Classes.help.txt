@@ -64,7 +64,7 @@ To instantiate an instance of a class, use one of the following syntaxes:
   The hashtable syntax only works for classes that have a default
   constructor that doesn't expect any parameters. It creates an instance of
   the class with the default constructor and then assigns the key-value
-  pairs to the instance properties. If any key in the hastable isn't a
+  pairs to the instance properties. If any key in the hashtable isn't a
   valid property name, PowerShell raises an error.
 
 
@@ -116,7 +116,7 @@ instance of the class.
                 $this.$Property = $Properties.$Property
             }
         }
-        # Method to calculate reading time as 30 seconds per page
+        # Method to calculate reading time as 2 minutes per page
         [timespan] GetReadingTime() {
             if ($this.PageCount -le 0) {
                 throw 'Unable to determine reading time from page count.'
@@ -331,6 +331,34 @@ The following snippet calls the static methods for the class.
          |              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
          | Book 'The Hobbit by J.R.R. Tolkien (1937)' already in list
 
+Example 4 - Parallel execution corrupting a runspace
+
+The ShowRunspaceId() method of [UnsafeClass] reports different thread Ids
+but the same runspace ID. Eventually, the session state is corrupted
+causing an error, such as Global scope cannot be removed.
+
+    # Class definition with Runspace affinity (default behavior)
+    class UnsafeClass {
+        static [object] ShowRunspaceId($val) {
+            return [PSCustomObject]@{
+                ThreadId   = [Threading.Thread]::CurrentThread.ManagedThreadId
+                RunspaceId = [runspace]::DefaultRunspace.Id
+            }
+        }
+    }
+
+    $unsafe = [UnsafeClass]::new()
+
+    while ($true) {
+        1..10 | ForEach-Object -Parallel {
+            Start-Sleep -ms 100
+            ($using:unsafe)::ShowRunspaceId($_)
+        }
+    }
+
+  [!NOTE] This example runs in an infinite loop. Enter Ctrl+C to stop the
+  execution.
+
 
 Class properties
 
@@ -426,6 +454,21 @@ the class can be used like any other class implementing that interface.
 
 For more information about deriving classes that inherit from a base class
 or implement interfaces, see about_Classes_Inheritance.
+
+
+Runspace affinity
+
+A runspace is the operating environment for the commands invoked by
+PowerShell. This environment includes the commands and data that are
+currently present, and any language restrictions that currently apply.
+
+A PowerShell class is affiliated with the RUNSPACE where it's created.
+Using a PowerShell class in ForEach-Object -Parallel isn't safe. Method
+invocations on the class are marshalled back to the RUNSPACE where it was
+created, which can corrupt the state of the RUNSPACE or cause a deadlock.
+
+For an illustration of a how runspace affinity can cause errors, see
+Example 4.
 
 
 Exporting classes with type accelerators
@@ -566,6 +609,13 @@ General limitations
 
 -   The hidden and static keywords only apply to class members, not a class
     definition.
+
+    Workaround: None.
+
+-   PowerShell classes aren't safe to use in parallel execution across
+    runspaces. When you Invoke methods on a class, PowerShell marshalls the
+    invocations back to the RUNSPACE where the class was created, which can
+    corrupt the state of the RUNSPACE or cause a deadlock.
 
     Workaround: None.
 

@@ -240,22 +240,17 @@ PowerShell sends the following string to Icacls.
 
     X:\VMS /grant Dom\HVAdmin:(CI)(OI)F
 
-Here is another example. The SHOWARGS function outputs the values passed to
-it. In this example, we pass the variable named $HOME to the function
-twice.
+In this second example, we pass the variable $HOME to the cmd.exe /c echo
+command twice.
 
-    function showArgs {
-      "`$args = " + ($args -join '|')
-    }
+    cmd.exe /c echo $HOME --% $HOME
 
-    showArgs $HOME --% $HOME
+The output shows that the first instance of $HOME is interpreted by
+PowerShell so that the value of the variable is passed to cmd. The second
+instance of $HOME comes after the stop-parsing token, so it is passed as a
+literal string.
 
-You can see in the output that, for the first parameter, the variable $HOME
-is interpreted by PowerShell so that the value of the variable is passed to
-the function. The second use of $HOME comes after the stop-parsing token,
-so the string "$HOME" is passed to the function without interpretation.
-
-    $args = C:\Users\username|--%|$HOME
+    C:\Users\username  $HOME
 
 For more information about the stop-parsing token, see about_Parsing.
 

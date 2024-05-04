@@ -3,7 +3,7 @@
 ABOUT_TYPE_ACCELERATORS
 
 
-SHORT DESRIPTION
+SHORT DESCRIPTION
 
 Describes the Type accelerators available for .NET framework classes
 

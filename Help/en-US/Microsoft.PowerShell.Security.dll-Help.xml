@@ -1243,7 +1243,8 @@ Try the new Break All command</dev:code>
     </command:details>
     <maml:description>
       <maml:para>The `Get-Credential` cmdlet creates a credential object for a specified user name and password. You can use the credential object in security operations.</maml:para>
-      <maml:para>The `Get-Credential` cmdlet prompts the user for a password or a user name and password. You can use the Message parameter to specify a customized message in the command line prompt.</maml:para>
+      <maml:para>The `Get-Credential` cmdlet prompts the user for a password or a user name and password. You can use the Message parameter to specify a customized message for the prompt.</maml:para>
+      <maml:para>In Windows PowerShell 5.1 and earlier, Windows presents a dialog box to prompt for a user name and password. In PowerShell 6.0 and later, the prompt is presented in the console for all platforms.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -1447,8 +1448,8 @@ Password for user Server01\PowerUser:</dev:code>
         <dev:code>Invoke-Command -ComputerName Server01 {Get-Credential Domain01\User02}
 
 PowerShell Credential Request : PowerShell Credential Request
-Warning: This credential is being requested by a script or application on the SERVER01 remote computer. Enter your credentials only if you
- trust the remote computer and the application or script requesting it.
+Warning: This credential is being requested by a script or application on the SERVER01 remote computer.
+Enter your credentials only if you trust the remote computer and the application or script requesting it.
 
 Enter your credentials.
 Password for user Domain01\User02: ***************
@@ -1499,8 +1500,8 @@ Password           : System.Security.SecureString</dev:code>
             <maml:para>- `MachinePolicy`. Set by a Group Policy for all users of the computer.</maml:para>
             <maml:para>- `UserPolicy`. Set by a Group Policy for the current user of the computer.</maml:para>
             <maml:para>- `Process`. Affects only the current PowerShell session.</maml:para>
-            <maml:para>- `CurrentUser`. Affects only the current user.</maml:para>
             <maml:para>- `LocalMachine`. Default scope that affects all users of the computer.</maml:para>
+            <maml:para>- `CurrentUser`. Affects only the current user.</maml:para>
           </maml:description>
           <command:parameterValueGroup>
             <command:parameterValue required="false" command:variableLength="false">CurrentUser</command:parameterValue>
@@ -1519,7 +1520,7 @@ Password           : System.Security.SecureString</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>List</maml:name>
           <maml:description>
-            <maml:para>Gets all execution policy values for the session listed in precedence order. By default, `Get-ExecutionPolicy` gets only the effective execution policy.</maml:para>
+            <maml:para>Gets all execution policy values for the session. By default, `Get-ExecutionPolicy` gets only the effective execution policy.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>System.Management.Automation.SwitchParameter</maml:name>
@@ -1533,7 +1534,7 @@ Password           : System.Security.SecureString</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>List</maml:name>
         <maml:description>
-          <maml:para>Gets all execution policy values for the session listed in precedence order. By default, `Get-ExecutionPolicy` gets only the effective execution policy.</maml:para>
+          <maml:para>Gets all execution policy values for the session. By default, `Get-ExecutionPolicy` gets only the effective execution policy.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Management.Automation.SwitchParameter</command:parameterValue>
         <dev:type>
@@ -1550,8 +1551,8 @@ Password           : System.Security.SecureString</dev:code>
           <maml:para>- `MachinePolicy`. Set by a Group Policy for all users of the computer.</maml:para>
           <maml:para>- `UserPolicy`. Set by a Group Policy for the current user of the computer.</maml:para>
           <maml:para>- `Process`. Affects only the current PowerShell session.</maml:para>
-          <maml:para>- `CurrentUser`. Affects only the current user.</maml:para>
           <maml:para>- `LocalMachine`. Default scope that affects all users of the computer.</maml:para>
+          <maml:para>- `CurrentUser`. Affects only the current user.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Microsoft.PowerShell.ExecutionPolicyScope</command:parameterValue>
         <dev:type>
@@ -3588,7 +3589,7 @@ Set-AuthenticodeSignature -FilePath ServerProps.ps1 -Certificate $cert</dev:code
       <maml:para>Beginning in PowerShell 6.0 for non-Windows computers, the default execution policy is `Unrestricted` and can't be changed. The `Set-ExecutionPolicy` cmdlet is available, but PowerShell displays a console message that it's not supported.</maml:para>
       <maml:para>An execution policy is part of the PowerShell security strategy. Execution policies determine whether you can load configuration files, such as your PowerShell profile, or run scripts. And, whether scripts must be digitally signed before they are run.</maml:para>
       <maml:para>The `Set-ExecutionPolicy` cmdlet's default scope is `LocalMachine`, which affects everyone who uses the computer. To change the execution policy for `LocalMachine`, start PowerShell with **Run as Administrator**.</maml:para>
-      <maml:para>To display the execution policies for each scope in the order of precedence, use `Get-ExecutionPolicy -List`. To see the effective execution policy for your PowerShell session use `Get-ExecutionPolicy` with no parameters.</maml:para>
+      <maml:para>To display the execution policies for each scope, use `Get-ExecutionPolicy -List`. To see the effective execution policy for your PowerShell session use `Get-ExecutionPolicy` with no parameters.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -3623,11 +3624,11 @@ Set-AuthenticodeSignature -FilePath ServerProps.ps1 -Certificate $cert</dev:code
           <maml:description>
             <maml:para>Specifies the scope that is affected by an execution policy. The default scope is `LocalMachine`.</maml:para>
             <maml:para>The effective execution policy is determined by the order of precedence as follows:</maml:para>
-            <maml:para>- `MachinePolicy`. Set by a Group Policy for all users of the computer.</maml:para>
-            <maml:para>- `UserPolicy`. Set by a Group Policy for the current user of the computer.</maml:para>
-            <maml:para>- `Process`. Affects only the current PowerShell session.</maml:para>
-            <maml:para>- `CurrentUser`. Affects only the current user.</maml:para>
-            <maml:para>- `LocalMachine`. Default scope that affects all users of the computer.</maml:para>
+            <maml:para>- `MachinePolicy` - Set by a Group Policy for all users of the computer</maml:para>
+            <maml:para>- `UserPolicy` - Set by a Group Policy for the current user of the computer</maml:para>
+            <maml:para>- `Process` - Affects only the current PowerShell session</maml:para>
+            <maml:para>- `LocalMachine` - Default scope that affects all users of the computer</maml:para>
+            <maml:para>- `CurrentUser` - Affects only the current user</maml:para>
             <maml:para></maml:para>
             <maml:para>The `Process` scope only affects the current PowerShell session. The execution policy is saved in the environment variable `$env:PSExecutionPolicyPreference`, rather than the registry. When the PowerShell session is closed, the variable and value are deleted.</maml:para>
             <maml:para>Execution policies for the `CurrentUser` scope are written to the registry hive `HKEY_LOCAL_USER`.</maml:para>
@@ -3716,11 +3717,11 @@ Set-AuthenticodeSignature -FilePath ServerProps.ps1 -Certificate $cert</dev:code
         <maml:description>
           <maml:para>Specifies the scope that is affected by an execution policy. The default scope is `LocalMachine`.</maml:para>
           <maml:para>The effective execution policy is determined by the order of precedence as follows:</maml:para>
-          <maml:para>- `MachinePolicy`. Set by a Group Policy for all users of the computer.</maml:para>
-          <maml:para>- `UserPolicy`. Set by a Group Policy for the current user of the computer.</maml:para>
-          <maml:para>- `Process`. Affects only the current PowerShell session.</maml:para>
-          <maml:para>- `CurrentUser`. Affects only the current user.</maml:para>
-          <maml:para>- `LocalMachine`. Default scope that affects all users of the computer.</maml:para>
+          <maml:para>- `MachinePolicy` - Set by a Group Policy for all users of the computer</maml:para>
+          <maml:para>- `UserPolicy` - Set by a Group Policy for the current user of the computer</maml:para>
+          <maml:para>- `Process` - Affects only the current PowerShell session</maml:para>
+          <maml:para>- `LocalMachine` - Default scope that affects all users of the computer</maml:para>
+          <maml:para>- `CurrentUser` - Affects only the current user</maml:para>
           <maml:para></maml:para>
           <maml:para>The `Process` scope only affects the current PowerShell session. The execution policy is saved in the environment variable `$env:PSExecutionPolicyPreference`, rather than the registry. When the PowerShell session is closed, the variable and value are deleted.</maml:para>
           <maml:para>Execution policies for the `CurrentUser` scope are written to the registry hive `HKEY_LOCAL_USER`.</maml:para>

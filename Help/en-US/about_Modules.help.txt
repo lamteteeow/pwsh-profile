@@ -10,29 +10,41 @@ Explains how to install, import, and use PowerShell modules.
 
 Long description
 
-PowerShell provides two ways to package cmdlets, providers, functions,
-variables, and aliases:
+PowerShell is a scripting language and a command shell. The language is
+comprised of keywords, which provide the structure and logic of processing,
+and commands that perform the work. Commands in PowerShell are implemented
+as scripts, functions, or cmdlets.
 
--   Snap-ins
+A module is a self-contained reusable unit that can contain cmdlets,
+providers, functions, variables, and other types of resources that can be
+imported as a single unit.
 
-    Beginning in PowerShell 3.0, the MICROSOFT.POWERSHELL.CORE snap-in is
-    added to every session by default. This is the only snap-in remaining
-    in PowerShell. All other snap-ins were converted to modules.
+PowerShell comes with a base set of modules. You can also install more
+modules as needed. By default, installed modules are loaded automatically
+the first time you use a command from a module. Use the
+$PSModuleAutoloadingPreference variable to enable, disable and configure
+automatic loading of modules. For more information, see
+about_Preference_Variables.
 
--   Modules
-
-    Modules are loaded automatically on first-use and, unlike snap-ins,
-    modules can be unloaded or reloaded during a session.
+You can unload or reload during a session. Use the Remove-Module cmdlet to
+unload a module from your session. Use the Import-Module cmdlet to load a
+module.
 
 Modules can be created as compiled .NET assemblies written in C#, or
 script-based modules written in PowerShell. This topic explains how to use
 PowerShell modules. For information about how to write PowerShell modules,
 see Writing a PowerShell Module.
 
+  [!NOTE] Prior to PowerShell 3.0, cmdlets and providers were packaged in
+  PowerShell snap-ins. Beginning in PowerShell 3.0, the
+  MICROSOFT.POWERSHELL.CORE snap-in is added to every session by default.
+  This is the only snap-in remaining in PowerShell. All other snap-ins were
+  converted to modules. Creation of new snap-ins is no longer supported.
+
 
 Install a published module
 
-A published module is a module that is available from a registerd
+A published module is a module that is available from a registered
 repository, such as the PowerShell Gallery. The POWERSHELLGET and
 MICROSOFT.POWERSHELL.PSRESOURCEGET modules provide cmdlets for finding,
 installing, and publishing PowerShell modules to a registered repository.
@@ -87,7 +99,7 @@ about the default module locations, see about_PSModulePath.
 Module autoloading
 
 The first time that you run a command from an installed module, PowerShell
-automatically imports that module. The module must be stored in the
+automatically imports (loads) that module. The module must be stored in the
 locations specified in the $env:PSModulePath environment variable. Modules
 in other locations must be imported using the Import-Module cmdlet.
 
@@ -121,11 +133,6 @@ module. For example, if you use a command that requires the WSMan: drive,
 such as the Get-PSSessionConfiguration cmdlet, you might need to run the
 Import-Module cmdlet to import the MICROSOFT.WSMAN.MANAGEMENT module that
 includes the WSMan: drive.
-
-You can still run the Import-Module command to import a module and use the
-$PSModuleAutoloadingPreference variable to enable, disable and configure
-automatic importing of modules. For more information, see
-about_Preference_Variables.
 
 
 Manually import a module

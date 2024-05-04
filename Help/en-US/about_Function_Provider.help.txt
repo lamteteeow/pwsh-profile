@@ -69,7 +69,7 @@ To return to a file system drive, type the drive name. For example, type:
     Set-Location C:
 
 You can also work with the FUNCTION provider from any other PowerShell
-drive. To reference an function from another location, use the drive name
+drive. To reference a function from another location, use the drive name
 Function: in the path.
 
   [!NOTE] PowerShell uses aliases to allow you a familiar way to work with

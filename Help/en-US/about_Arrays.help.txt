@@ -735,28 +735,66 @@ the COUNT and LENGTH properties. Also, you can index into an array of one
 object. This feature helps you to avoid scripting errors that occur when a
 command that expects a collection gets fewer than two items.
 
-The following examples demonstrate this feature.
+The following example shows that a variable that contains no objects has a
+COUNT and LENGTH of 0.
 
-Zero objects
-
-    $a = $null
-    $a.Count
-    $a.Length
-
+    PS> $a = $null
+    PS> $a.Count
     0
+    PS> $a.Length
     0
 
-One object
+The following example shows that a variable that contains one object has a
+COUNT and LENGTH of 1. You can also use array indexing to access the value
+of the object.
 
-    $a = 4
-    $a.Count
-    $a.Length
-    $a[0]
-    $a[-1]
-
+    PS> $a = 4
+    PS> $a.Count
     1
+    PS> $a.Length
     1
+    PS> $a[0]
     4
+    PS> $a[-1]
+    4
+
+When you run a command that could return a collection or a single object,
+you can use array indexing to access the value of the object without having
+to test the COUNT or LENGTH properties. However, if the result is a single
+object (singleton), and that object has a COUNT or LENGTH property, the
+value of those properties belong to the singleton object and don't
+represent the number of items in the collection.
+
+In the following example, the command returns a single string object. The
+LENGTH of that string is 4.
+
+    PS> $result = 'one','two','three','four' | Where-Object {$_ -like 'f*'}
+    PS> $result.GetType().FullName
+    System.String
+    PS> $result
+    four
+    PS> $result.Count
+    1
+    PS❯ $result.Length
+    4
+
+If you want $result to be an array of strings, you need to declare the
+variable as an array.
+
+In this example, $result is an array of strings. The COUNT and LENGTH of
+the array is 1, and the LENGTH of the first element is 4.
+
+    PS> [string[]]$result = 'one','two','three','four' |
+        Where-Object {$_ -like 'f*'}
+    PS> $result.GetType().FullName
+    System.String[]
+    PS> $result
+    four
+    PS> $result.Count
+    1
+    PS> $result.Length
+    1
+    PS> $result[0].Length
     4
 
 

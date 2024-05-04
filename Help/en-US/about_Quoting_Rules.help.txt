@@ -311,6 +311,38 @@ leading and trailing empty lines.
     key                            value
 
 
+Culture settings affect string interpretation
+
+The ToString() methods uses the current configured culture settings to
+convert values to strings. For example, the culture of the following
+PowerShell session is set to de-DE. When the ToString() method converts the
+value of $x to a string it uses a comma (,) for the decimal separator.
+Also, the ToString() method converts the date to a string using the
+appropriate format for the German locale settings.
+
+    PS> Get-Culture
+
+    LCID             Name             DisplayName
+    ----             ----             -----------
+    1031             de-DE            German (Germany)
+
+    PS> $x = 1.2
+    PS> $x.ToString()
+    1,2
+
+    PS> (Get-Date 2024-03-19).ToString()
+    19.03.2024 00:00:00
+
+However, PowerShell uses the invariant culture when interpreting expandable
+string expressions.
+
+    PS? "$x"
+    1.2
+
+    PS> "$(Get-Date 2024-03-19)"
+    03/19/2024 00:00:00
+
+
 Passing quoted strings to external commands
 
 Some native commands expect arguments that contain quote characters.

@@ -13,11 +13,10 @@ Long description
 
 Beginning in Windows PowerShell 3.0, you can use the RUN WITH POWERSHELL
 feature to run scripts from File Explorer. The RUN WITH POWERSHELL feature
-is designed to run scripts that don't have required parameters and don't
-return output to the command prompt.
-
-When you use the RUN WITH POWERSHELL feature, the Windows PowerShell
-console window appears only briefly, if at all. You can't interact with it.
+is intended to run scripts that don't have required parameters, don't
+return output to console, and don't prompt for user input. When you use the
+RUN WITH POWERSHELL feature, the PowerShell console window appears only
+briefly, if at all.
 
 To use the RUN WITH POWERSHELL feature:
 
@@ -29,7 +28,7 @@ has an execution policy of Bypass, runs the script, and closes the session.
 
 It runs a command that has the following format:
 
-    PowerShell.exe -File <FileName> -ExecutionPolicy Bypass
+    pwsh.exe -File <FileName> -ExecutionPolicy Bypass
 
 RUN WITH POWERSHELL sets the Bypass execution policy only for the session
 (the current instance of the PowerShell process) in which the script runs.

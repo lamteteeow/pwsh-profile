@@ -15,7 +15,7 @@ Functions that specify the CmdletBinding attribute can access additional
 methods and properties through the $PSCmdlet variable. These methods
 include the following methods:
 
--   Input-processing methods that compiled cmdlets use to do their work.
+-   The same input-processing methods available to all functions.
 -   The ShouldProcess and ShouldContinue methods that are used to get user
     feedback before an action is performed.
 -   The ThrowTerminatingError method for generating error records.
@@ -82,11 +82,38 @@ blocks. For more information, see about_Automatic_Variables.
     object that reaches the function.
 -   If the pipeline input that reaches the function is empty, the process
     block DOES NOT execute.
-    -   The begin and end blocks still execute.
+    -   The begin, end, and clean blocks still execute.
 
   [!IMPORTANT] If a function parameter is set to accept pipeline input, and
   a process block isn't defined, record-by-record processing will fail. In
   this case, your function will only execute once, regardless of the input.
+
+When you create a function that accepts pipeline input and uses
+CmdletBinding, the process block should use the parameter variable you
+defined for pipeline input instead of $_ or $PSItem. For example:
+
+    function Get-SumOfNumbers {
+        [CmdletBinding()]
+        param (
+            [Parameter(Mandatory, Position=0, ValueFromPipeline)]
+            [int[]]$Numbers
+        )
+
+        begin { $retValue = 0 }
+
+        process {
+           foreach ($n in $Numbers) {
+               $retValue += $n
+           }
+        }
+
+        end { $retValue }
+    }
+
+    PS> Get-SumOfNumbers 1,2,3,4
+    10
+    PS> 1,2,3,4 | Get-SumOfNumbers
+    10
 
 end
 

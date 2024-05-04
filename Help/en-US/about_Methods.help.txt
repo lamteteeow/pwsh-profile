@@ -106,9 +106,9 @@ file to the C:\Bin directory.
   [!NOTE] Unlike PowerShell's _argument_ mode, object methods execute in
   _expression_ mode, which is a pass-through to the .NET framework that
   PowerShell is built on. In _expression_ mode BAREWORD arguments (unquoted
-  strings) are not allowed. You can see this difference when using a the
-  path as a parameter, versus the path as an argument. You can read more
-  about parsing modes in about_Parsing
+  strings) are not allowed. You can see this difference when using the path
+  as a parameter, versus the path as an argument. You can read more about
+  parsing modes in about_Parsing
 
 The second method signature takes a destination file name and a Boolean
 value that determines whether the destination file should be overwritten,

@@ -213,7 +213,7 @@ other assignments fail.
 
 For example, the following command assigns a hash table to the $a variable.
 Then, it uses the += operator to append another hash table to the existing
-hash table, effectively adding a new key/value pair to the existing hash
+hash table, effectively adding a new key-value pair to the existing hash
 table. This command succeeds, as shown in the output:
 
     $a = @{a = 1; b = 2; c = 3}

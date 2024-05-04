@@ -5108,7 +5108,7 @@ ReadOnlyFile.txt</dev:code>
       </command:example>
       <command:example>
         <maml:title>Example 3: Get child items in the current directory and subdirectories</maml:title>
-        <dev:code>Get-ChildItem -Path C:\Test\*.txt -Recurse -Force
+        <dev:code>Get-ChildItem -Path .\*.txt -Recurse -Force
 
 Directory: C:\Test\Logs\Adirectory
 
@@ -6672,7 +6672,7 @@ Add            Method                int IList.Add(System.Object value)</dev:cod
     <maml:alertSet>
       <maml:alert>
         <maml:para>This cmdlet is only available on Windows platforms.</maml:para>
-        <maml:para>The Win32_QuickFixEngineering WMI class (/windows/desktop/WmiSdk/retrieving-a-class)represents a small system-wide update, commonly referred to as a quick-fix engineering (QFE) update, applied to the current operating system. This class returns only the updates supplied by Component Based Servicing (CBS). These updates aren't listed in the registry. Updates supplied by Microsoft Windows Installer (MSI) or the Windows Update (https://update.microsoft.com)site aren't returned by Win32_QuickFixEngineering . For more information, see Win32_QuickFixEngineering class (/windows/desktop/CIMWin32Prov/win32-quickfixengineering).</maml:para>
+        <maml:para>The Win32_QuickFixEngineering WMI class (/windows/desktop/WmiSdk/retrieving-a-class)represents a small system-wide update, commonly referred to as a quick-fix engineering (QFE) update, applied to the current operating system. This class returns only the updates supplied by Component Based Servicing (CBS). These updates aren't listed in the registry. Updates supplied by Microsoft Windows Installer (MSI) or the Windows Update (https://www.catalog.update.microsoft.com/)site aren't returned by Win32_QuickFixEngineering . For more information, see Win32_QuickFixEngineering class (/windows/desktop/CIMWin32Prov/win32-quickfixengineering).</maml:para>
         <maml:para>The `Get-HotFix` output might vary on different operating systems.</maml:para>
       </maml:alert>
     </maml:alertSet>
@@ -6692,16 +6692,16 @@ Server01       Update           KB4480056     NT AUTHORITY\SYSTEM  1/24/2019 00:
       </command:example>
       <command:example>
         <maml:title>Example 2: Get hotfixes from multiple computers filtered by a string</maml:title>
-        <dev:code>PS&gt; Get-HotFix -Description Security* -ComputerName Server01, Server02 -Credential Domain01\admin01</dev:code>
+        <dev:code>Get-HotFix -Description Security* -ComputerName Server01, Server02 -Credential Domain01\admin01</dev:code>
         <dev:remarks>
           <maml:para>`Get-Hotfix` filters the output with the Description parameter and the string Security that includes the asterisk (` `) wildcard. The ComputerName * parameter includes a comma-separated string of remote computer names. The Credential parameter specifies a user account that has permission to access the remote computers and run commands.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>Example 3: Verify if an update is installed and write computer names to a file</maml:title>
-        <dev:code>PS&gt; $A = Get-Content -Path ./Servers.txt
-PS&gt; $A | ForEach-Object { if (!(Get-HotFix -Id KB957095 -ComputerName $_))
-         { Add-Content $_ -Path ./Missing-KB957095.txt }}</dev:code>
+        <dev:code>$A = Get-Content -Path ./Servers.txt
+$A | ForEach-Object { if (!(Get-HotFix -Id KB957095 -ComputerName $_))
+    { Add-Content $_ -Path ./Missing-KB957095.txt }}</dev:code>
         <dev:remarks>
           <maml:para>The `$A` variable contains computer names that were obtained by `Get-Content` from a text file. The objects in `$A` are sent down the pipeline to `ForEach-Object`. An `if` statement uses the `Get-Hotfix` cmdlet with the Id parameter and a specific Id number for each computer name. If a computer doesn't have the specified hotfix Id installed, the `Add-Content` cmdlet writes the computer name to a file.</maml:para>
         </dev:remarks>
@@ -6729,7 +6729,7 @@ PS&gt; $A | ForEach-Object { if (!(Get-HotFix -Id KB957095 -ComputerName $_))
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Get-Credential</maml:linkText>
-        <maml:uri></maml:uri>
+        <maml:uri>xref:Microsoft.PowerShell.Security.Get-Credential</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>Win32_QuickFixEngineering class</maml:linkText>
@@ -9860,6 +9860,7 @@ C:\Users\User01</dev:code>
         <maml:para>Beginning in PowerShell 6.0, the following properties are added to the ServiceController objects: UserName , Description , DelayedAutoStart , BinaryPathName , and StartupType .</maml:para>
         <maml:para>This cmdlet can display services only when the current user has permission to see them. If this cmdlet does not display services, you might not have permission to see them.</maml:para>
         <maml:para>To find the service name and display name of each service on your system, type `Get-Service`. The service names appear in the Name column, and the display names appear in the DisplayName column.</maml:para>
+        <maml:para>&gt; [!NOTE] &gt; Typically, `Get-Service` returns information about services and not driver. However, if you &gt; specify the name of a driver, `Get-Service` returns information about the driver. &gt; &gt; - Enumeration doesn't include device driver services &gt; - When a wildcard is specified, the cmdlet only returns Windows services &gt; - If you specify the Name or DisplayName that is an exact match to a device service name, &gt;   then the device instance is returned</maml:para>
         <maml:para>When you sort in ascending order by status value, `Stopped` services appear before `Running` services. The Status property of a service is an enumerated value in which the names of the statuses represent integer values. The sort is based on the integer value, not the name. `Running` appears before `Stopped` because `Stopped` has a value of `1`, and `Running` has a value of `4`. For more information, see ServiceControllerStatus (/dotnet/api/system.serviceprocess.servicecontrollerstatus).</maml:para>
       </maml:alert>
     </maml:alertSet>
@@ -10583,6 +10584,7 @@ Central Pacific Standard Time</dev:code>
           <maml:description>
             <maml:para>Specifies additional elements to append to the value of the Path parameter. The `ChildPath` parameter is still mandatory and must be specified as well.</maml:para>
             <maml:para>This parameter is specified with the `ValueFromRemainingArguments` property which enables joining an indefinite number of paths.</maml:para>
+            <maml:para>This parameter was added in PowerShell 6.0.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
           <dev:type>
@@ -10624,6 +10626,7 @@ Central Pacific Standard Time</dev:code>
         <maml:description>
           <maml:para>Specifies additional elements to append to the value of the Path parameter. The `ChildPath` parameter is still mandatory and must be specified as well.</maml:para>
           <maml:para>This parameter is specified with the `ValueFromRemainingArguments` property which enables joining an indefinite number of paths.</maml:para>
+          <maml:para>This parameter was added in PowerShell 6.0.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
         <dev:type>
@@ -10706,7 +10709,7 @@ Central Pacific Standard Time</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>The cmdlets that contain the Path noun (the Path cmdlets) manipulate path names and return the names in a concise format that all PowerShell providers can interpret. They are designed for use in programs and scripts where you want to display all or part of a path name in a particular format. Use them like you would use Dirname, Normpath, Realpath, Join, or other path manipulators.</maml:para>
+        <maml:para>The cmdlets that contain the Path noun (the Path cmdlets) manipulate path names and return the names in a concise format that all PowerShell providers can interpret. They are designed for use in programs and scripts where you want to display all or part of a path name in a particular format. Use them like you would use `Dirname`, `Normpath`, `Realpath`, `Join`, or other path manipulators.</maml:para>
         <maml:para>You can use the path cmdlets with several providers, including the `FileSystem`, `Registry`, and `Certificate` providers.</maml:para>
         <maml:para>This cmdlet is designed to work with the data exposed by any provider. To list the providers available in your session, type `Get-PSProvider`. For more information, see about_Providers (../Microsoft.PowerShell.Core/About/about_Providers.md).</maml:para>
       </maml:alert>
@@ -10728,14 +10731,14 @@ path\childpath</dev:code>
 
 path\childpath</dev:code>
         <dev:remarks>
-          <maml:para>Existing directory separators `` and handled so there is only one separator between `Path` and `ChildPath`</maml:para>
+          <maml:para>Existing directory separators `` are handled so there is only one separator between `Path` and `ChildPath`</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>Example 3: Display files and folders by joining a path with a child path</maml:title>
         <dev:code>Join-Path "C:\win*" "System*" -Resolve</dev:code>
         <dev:remarks>
-          <maml:para>This command displays the files and folders that are referenced by joining the C:\Win\ path and the System\ child path. It displays the same files and folders as `Get-ChildItem`, but it displays the fully qualified path to each item. In this command, the `Path` and `ChildPath` optional parameter names are omitted.</maml:para>
+          <maml:para>This command displays the files and folders that are referenced by joining the `C:\Win*` path and the `System*` child path. It displays the same files and folders as `Get-ChildItem`, but it displays the fully qualified path to each item. In this command, the `Path` and `ChildPath` optional parameter names are omitted.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -10769,9 +10772,9 @@ F:\New</dev:code>
 C:\Subdir
 D:\Subdir</dev:code>
         <dev:remarks>
-          <maml:para>This command combines the roots of each PowerShell file system drive in the console with the Subdir child path.</maml:para>
-          <maml:para>The command uses the `Get-PSDrive` cmdlet to get the PowerShell drives supported by the FileSystem provider. The `ForEach-Object` statement selects only the Root property of the `PSDriveInfo` objects and combines it with the specified child path.</maml:para>
-          <maml:para>The output shows that the PowerShell drives on the computer included a drive mapped to the C:\Program Files directory.</maml:para>
+          <maml:para>This command combines the roots of each PowerShell file system drive in the console with the `Subdir` child path.</maml:para>
+          <maml:para>The command uses the `Get-PSDrive` cmdlet to get the PowerShell drives supported by the FileSystem provider. The `ForEach-Object` statement selects only the Root property of the PSDriveInfo objects and combines it with the specified child path.</maml:para>
+          <maml:para>The output shows that the PowerShell drives on the computer included a drive mapped to the `C:\Program Files` directory.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -10839,7 +10842,7 @@ a\b\c\d\e\f\g</dev:code>
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Destination</maml:name>
           <maml:description>
-            <maml:para>Specifies the path to the location where the items are being moved. The default is the current directory. Wildcards are permitted, but the result must specify a single location.</maml:para>
+            <maml:para>Specifies the path to the location where the items are being moved. The default is the current directory. Wildcards aren't permitted.</maml:para>
             <maml:para>To rename the item being moved, specify a new name in the value of the Destination parameter.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -10972,7 +10975,7 @@ a\b\c\d\e\f\g</dev:code>
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
           <maml:name>Destination</maml:name>
           <maml:description>
-            <maml:para>Specifies the path to the location where the items are being moved. The default is the current directory. Wildcards are permitted, but the result must specify a single location.</maml:para>
+            <maml:para>Specifies the path to the location where the items are being moved. The default is the current directory. Wildcards aren't permitted.</maml:para>
             <maml:para>To rename the item being moved, specify a new name in the value of the Destination parameter.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -11092,7 +11095,7 @@ a\b\c\d\e\f\g</dev:code>
       <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>Destination</maml:name>
         <maml:description>
-          <maml:para>Specifies the path to the location where the items are being moved. The default is the current directory. Wildcards are permitted, but the result must specify a single location.</maml:para>
+          <maml:para>Specifies the path to the location where the items are being moved. The default is the current directory. Wildcards aren't permitted.</maml:para>
           <maml:para>To rename the item being moved, specify a new name in the value of the Destination parameter.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -11876,7 +11879,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>Current location</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ApplicationName</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -11890,7 +11893,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Authentication</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -11904,7 +11907,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>CertificateThumbprint</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -11981,7 +11984,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Options</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the Alias provider. For more information, see New-Alias (../Microsoft.PowerShell.Utility/New-Alias.md).</maml:para>
@@ -12000,7 +12003,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="OS">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="OS">
           <maml:name>OptionSet</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12014,7 +12017,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (System.Object[]), ByName (System.Object[])" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Port</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12028,7 +12031,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="SO">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="SO">
           <maml:name>SessionOption</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12042,7 +12045,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>UseSSL</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12105,7 +12108,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>Current location</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Authentication</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12119,7 +12122,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>CertificateThumbprint</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12133,7 +12136,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>ConnectionURI</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12198,7 +12201,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Options</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the Alias provider. For more information, see New-Alias (../Microsoft.PowerShell.Utility/New-Alias.md).</maml:para>
@@ -12217,7 +12220,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="OS">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="OS">
           <maml:name>OptionSet</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12231,7 +12234,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (System.Object[]), ByName (System.Object[])" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Port</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12245,7 +12248,7 @@ a\b\c\d\e\f\g</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="SO">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="SO">
           <maml:name>SessionOption</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12296,7 +12299,7 @@ a\b\c\d\e\f\g</dev:code>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ApplicationName</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12310,7 +12313,7 @@ a\b\c\d\e\f\g</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Authentication</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12324,7 +12327,7 @@ a\b\c\d\e\f\g</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>CertificateThumbprint</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12338,7 +12341,7 @@ a\b\c\d\e\f\g</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>ConnectionURI</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12416,7 +12419,7 @@ a\b\c\d\e\f\g</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Options</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the Alias provider. For more information, see New-Alias (../Microsoft.PowerShell.Utility/New-Alias.md).</maml:para>
@@ -12435,7 +12438,7 @@ a\b\c\d\e\f\g</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="OS">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="OS">
         <maml:name>OptionSet</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12462,7 +12465,7 @@ a\b\c\d\e\f\g</dev:code>
         </dev:type>
         <dev:defaultValue>Current location</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (System.Object[]), ByName (System.Object[])" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Port</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12476,7 +12479,7 @@ a\b\c\d\e\f\g</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="SO">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="SO">
         <maml:name>SessionOption</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12490,7 +12493,7 @@ a\b\c\d\e\f\g</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>UseSSL</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the WSMan provider. The WSMan provider and this parameter are only available on Windows.</maml:para>
@@ -12554,10 +12557,50 @@ a\b\c\d\e\f\g</dev:code>
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>System.Object</maml:name>
+          <maml:name>System.Collections.DictionaryEntry</maml:name>
         </dev:type>
         <maml:description>
-          <maml:para>This cmdlet returns the item that it creates.</maml:para>
+          <maml:para>The cmdlet returns a DictionaryEntry object when creating a new environment variable.</maml:para>
+        </maml:description>
+      </command:returnValue>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.IO.DirectoryInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>The cmdlet returns a DirectoryInfo object when creating a new directory in the filesystem.</maml:para>
+        </maml:description>
+      </command:returnValue>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.IO.FileInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>The cmdlet returns a FileInfo object when creating a new file in the filesystem.</maml:para>
+        </maml:description>
+      </command:returnValue>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.AliasInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>The cmdlet returns an AliasInfo object when creating a new alias.</maml:para>
+        </maml:description>
+      </command:returnValue>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.FunctionInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>The cmdlet returns a FunctionInfo object when creating a new function.</maml:para>
+        </maml:description>
+      </command:returnValue>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSVariable</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>The cmdlet returns a PSVariable object when creating a new variable.</maml:para>
         </maml:description>
       </command:returnValue>
     </command:returnValues>
@@ -14676,7 +14719,7 @@ PS C:\&gt;</dev:code>
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
           <maml:name>Stream</maml:name>
           <maml:description>
-            <maml:para>This is a dyanamic parameter made available by the FileSystem provider. This parameter is only available on Windows. This parameter can't be used in combination with the Recurse parameter.</maml:para>
+            <maml:para>This is a dynamic parameter made available by the FileSystem provider. This parameter is only available on Windows. This parameter can't be used in combination with the Recurse parameter.</maml:para>
             <maml:para>You can use `Remove-Item` to delete an alternative data stream, such as `Zone.Identifier`. However, it isn't the recommended way to eliminate security checks that block files that are downloaded from the Internet. If you verify that a downloaded file is safe, use the `Unblock-File` cmdlet.</maml:para>
             <maml:para>This parameter was introduced in Windows PowerShell 3.0. As of Windows PowerShell 7.2, `Remove-Item` can remove alternative data streams from directories as well as files.</maml:para>
             <maml:para>For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -14815,7 +14858,7 @@ PS C:\&gt;</dev:code>
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
           <maml:name>Stream</maml:name>
           <maml:description>
-            <maml:para>This is a dyanamic parameter made available by the FileSystem provider. This parameter is only available on Windows. This parameter can't be used in combination with the Recurse parameter.</maml:para>
+            <maml:para>This is a dynamic parameter made available by the FileSystem provider. This parameter is only available on Windows. This parameter can't be used in combination with the Recurse parameter.</maml:para>
             <maml:para>You can use `Remove-Item` to delete an alternative data stream, such as `Zone.Identifier`. However, it isn't the recommended way to eliminate security checks that block files that are downloaded from the Internet. If you verify that a downloaded file is safe, use the `Unblock-File` cmdlet.</maml:para>
             <maml:para>This parameter was introduced in Windows PowerShell 3.0. As of Windows PowerShell 7.2, `Remove-Item` can remove alternative data streams from directories as well as files.</maml:para>
             <maml:para>For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -14970,7 +15013,7 @@ PS C:\&gt;</dev:code>
       <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
         <maml:name>Stream</maml:name>
         <maml:description>
-          <maml:para>This is a dyanamic parameter made available by the FileSystem provider. This parameter is only available on Windows. This parameter can't be used in combination with the Recurse parameter.</maml:para>
+          <maml:para>This is a dynamic parameter made available by the FileSystem provider. This parameter is only available on Windows. This parameter can't be used in combination with the Recurse parameter.</maml:para>
           <maml:para>You can use `Remove-Item` to delete an alternative data stream, such as `Zone.Identifier`. However, it isn't the recommended way to eliminate security checks that block files that are downloaded from the Internet. If you verify that a downloaded file is safe, use the `Unblock-File` cmdlet.</maml:para>
           <maml:para>This parameter was introduced in Windows PowerShell 3.0. As of Windows PowerShell 7.2, `Remove-Item` can remove alternative data streams from directories as well as files.</maml:para>
           <maml:para>For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -17415,7 +17458,7 @@ Mode                LastWriteTime         Length Name
       <maml:alert>
         <maml:para>PowerShell includes the following aliases for `Rename-ItemProperty`:</maml:para>
         <maml:para>- All platforms:   - `rnp`</maml:para>
-        <maml:para>`Remove-ItemProperty` is designed to work with the data exposed by any provider. To list the providers available in your session, type `Get-PSProvider`. For more information, see about_Providers (../Microsoft.PowerShell.Core/About/about_Providers.md).</maml:para>
+        <maml:para>`Rename-ItemProperty` is designed to work with the data exposed by any provider. To list the providers available in your session, type `Get-PSProvider`. For more information, see about_Providers (../Microsoft.PowerShell.Core/About/about_Providers.md).</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -19254,7 +19297,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>AsByteStream</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -19279,7 +19322,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Encoding</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -19379,7 +19422,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>NoNewline</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -19402,7 +19445,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Stream</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider. This Parameter is only available on Windows. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -19466,7 +19509,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>AsByteStream</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -19491,7 +19534,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Encoding</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -19578,7 +19621,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>NoNewline</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -19601,7 +19644,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Stream</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider. This Parameter is only available on Windows. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -19641,7 +19684,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>AsByteStream</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the FileSystem provider. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -19667,7 +19710,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Encoding</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the FileSystem provider. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -19756,7 +19799,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>NoNewline</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the FileSystem provider. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -19793,7 +19836,7 @@ Restart-Computer -ComputerName $Names -Credential $Creds -Force</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Stream</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the FileSystem provider. This Parameter is only available on Windows. For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
@@ -20079,7 +20122,7 @@ The word Caution was replaced.</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Options</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the Alias and Function providers. For more information, see about_Alias_Provider (../Microsoft.PowerShell.Core/About/about_Alias_Provider.md)and about_Function_Provider (../Microsoft.PowerShell.Core/About/about_Function_Provider.md).</maml:para>
@@ -20109,7 +20152,7 @@ The word Caution was replaced.</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (True)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Type</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the Registry provider. The Registry provider and this parameter are only available on Windows.</maml:para>
@@ -20231,7 +20274,7 @@ The word Caution was replaced.</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Options</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the Alias and Function providers. For more information, see about_Alias_Provider (../Microsoft.PowerShell.Core/About/about_Alias_Provider.md)and about_Function_Provider (../Microsoft.PowerShell.Core/About/about_Function_Provider.md).</maml:para>
@@ -20261,7 +20304,7 @@ The word Caution was replaced.</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (True)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Type</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the Registry provider. The Registry provider and this parameter are only available on Windows.</maml:para>
@@ -20373,7 +20416,7 @@ The word Caution was replaced.</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Options</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the Alias and Function providers. For more information, see about_Alias_Provider (../Microsoft.PowerShell.Core/About/about_Alias_Provider.md)and about_Function_Provider (../Microsoft.PowerShell.Core/About/about_Function_Provider.md).</maml:para>
@@ -20416,7 +20459,7 @@ The word Caution was replaced.</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (True)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Type</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the Registry provider. The Registry provider and this parameter are only available on Windows.</maml:para>
@@ -20685,7 +20728,7 @@ The word Caution was replaced.</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (True)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Type</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the Registry provider. The Registry provider and this parameter are only available on Windows.</maml:para>
@@ -20819,7 +20862,7 @@ The word Caution was replaced.</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (True)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Type</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the Registry provider. The Registry provider and this parameter are only available on Windows.</maml:para>
@@ -20965,7 +21008,7 @@ The word Caution was replaced.</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (True)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Type</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the Registry provider. The Registry provider and this parameter are only available on Windows.</maml:para>
@@ -21110,7 +21153,7 @@ The word Caution was replaced.</dev:code>
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (True)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Type</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the Registry provider. The Registry provider and this parameter are only available on Windows.</maml:para>
@@ -21270,7 +21313,7 @@ The word Caution was replaced.</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (True)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Type</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the Registry provider. The Registry provider and this parameter are only available on Windows.</maml:para>
@@ -21788,6 +21831,7 @@ PS Cert:\&gt;</dev:code>
           <maml:name>DisplayName</maml:name>
           <maml:description>
             <maml:para>Specifies a new display name for the service.</maml:para>
+            <maml:para>&gt; [!NOTE] &gt; Typically, `Set-Service` only operates on Windows services and not drivers. However, if you &gt; specify the name of a driver, `Set-Service` can target the driver.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
           <dev:type>
@@ -21899,6 +21943,7 @@ PS Cert:\&gt;</dev:code>
           <maml:name>Name</maml:name>
           <maml:description>
             <maml:para>Specifies the service name of the service to be changed. Wildcard characters aren't permitted. You can use the pipeline to send a service name to `Set-Service`.</maml:para>
+            <maml:para>&gt; [!NOTE] &gt; Typically, `Set-Service` only operates on Windows services and not drivers. However, if you &gt; specify the name of a driver, `Set-Service` can target the driver.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
           <dev:type>
@@ -21940,6 +21985,7 @@ PS Cert:\&gt;</dev:code>
           <maml:name>DisplayName</maml:name>
           <maml:description>
             <maml:para>Specifies a new display name for the service.</maml:para>
+            <maml:para>&gt; [!NOTE] &gt; Typically, `Set-Service` only operates on Windows services and not drivers. However, if you &gt; specify the name of a driver, `Set-Service` can target the driver.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
           <dev:type>
@@ -22080,6 +22126,7 @@ PS Cert:\&gt;</dev:code>
         <maml:name>DisplayName</maml:name>
         <maml:description>
           <maml:para>Specifies a new display name for the service.</maml:para>
+          <maml:para>&gt; [!NOTE] &gt; Typically, `Set-Service` only operates on Windows services and not drivers. However, if you &gt; specify the name of a driver, `Set-Service` can target the driver.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
         <dev:type>
@@ -22116,6 +22163,7 @@ PS Cert:\&gt;</dev:code>
         <maml:name>Name</maml:name>
         <maml:description>
           <maml:para>Specifies the service name of the service to be changed. Wildcard characters aren't permitted. You can use the pipeline to send a service name to `Set-Service`.</maml:para>
+          <maml:para>&gt; [!NOTE] &gt; Typically, `Set-Service` only operates on Windows services and not drivers. However, if you &gt; specify the name of a driver, `Set-Service` can target the driver.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
         <dev:type>
@@ -24760,7 +24808,7 @@ PS&gt; Start-Service tlntsvr</dev:code>
     <maml:alertSet>
       <maml:alert>
         <maml:para>This cmdlet uses the `Win32Shutdown` (/windows/desktop/CIMWin32Prov/win32shutdown-method-in-class-win32-operatingsystem)method of the `Win32_OperatingSystem` (/windows/desktop/CIMWin32Prov/win32-operatingsystem)WMI class. This method requires the `SeShutdownPrivilege` privilege be enabled for the user account used to shutdown the machine.</maml:para>
-        <maml:para>In PowerShell 7.1, `Stop-Computer` was added for Linux and macOS. For these platorms, the cmdlet calls the native command `/sbin/shutdown`.</maml:para>
+        <maml:para>In PowerShell 7.1, `Stop-Computer` was added for Linux and macOS. For these platforms, the cmdlet calls the native command `/sbin/shutdown`.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -27218,7 +27266,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>The `Test-Path` cmdlet determines whether all elements of the path exist. It returns `$True` if all elements exist and `$False` if any are missing. It can also tell whether the path syntax is valid and whether the path leads to a container or a terminal or leaf element. If the Path is a whitespace or empty string, then `$False` is returned. If the Path is `$null`, array of `$null` or empty array, a non-terminating error is returned.</maml:para>
+      <maml:para>The `Test-Path` cmdlet determines whether all elements of the path exist. It returns `$true` if all elements exist and `$false` if any are missing. It can also tell whether the path syntax is valid and whether the path leads to a container or a terminal or leaf element. If the Path is a whitespace or empty string, then the cmdlet returns `$false`. If the Path is `$null`, an array of `$null` or an empty array, the cmdlet returns a non-terminating error.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -27238,7 +27286,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
           <maml:name>Exclude</maml:name>
           <maml:description>
-            <maml:para>Specifies items that this cmdlet omits. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as "*.txt". Wildcard characters are permitted.</maml:para>
+            <maml:para>Specifies items that this cmdlet omits. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as `*.txt`. Wildcard characters are permitted.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
           <dev:type>
@@ -27250,7 +27298,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
           <maml:name>Filter</maml:name>
           <maml:description>
-            <maml:para>Specifies a filter in the format or language of the provider. The value of this parameter qualifies the Path parameter. The syntax of the filter, including the use of wildcard characters, depends on the provider. Filters are more efficient than other parameters, because the provider applies them when it retrieves the objects instead of having PowerShell filter the objects after they are retrieved.</maml:para>
+            <maml:para>Specifies a filter in the format or language of the provider. The value of this parameter qualifies the Path parameter. The syntax of the filter, including the use of wildcard characters, depends on the provider. Filters are more efficient than other parameters, because the provider applies them when it retrieves the objects instead of having PowerShell filter the objects after they're retrieved.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
           <dev:type>
@@ -27262,7 +27310,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
           <maml:name>Include</maml:name>
           <maml:description>
-            <maml:para>Specifies paths that this cmdlet tests. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as "*.txt". Wildcard characters are permitted.</maml:para>
+            <maml:para>Specifies paths that this cmdlet tests. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as `*.txt`. Wildcard characters are permitted.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
           <dev:type>
@@ -27274,7 +27322,8 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>IsValid</maml:name>
           <maml:description>
-            <maml:para>Indicates that this cmdlet tests the syntax of the path, regardless of whether the elements of the path exist. This cmdlet returns `$True` if the path syntax is valid and `$False` if it is not.</maml:para>
+            <maml:para>Indicates that this cmdlet tests the syntax of the path, regardless of whether the elements of the path exist. This cmdlet returns `$true` if the path syntax is valid and `$false` if it's not. If the path being tested includes a drive specification, the cmdlet returns false when the drive does not exist. PowerShell returns false because it doesn't know which drive provider to test.</maml:para>
+            <maml:para>&gt; [!NOTE] &gt; A breaking change in the Path APIs was introduced in .NET 2.1. Those methods no longer check for &gt; invalid path characters. This change caused a regression in PowerShell where the IsValid check &gt; no longer tests for invalid characters. The regression will be addressed in a future release. For &gt; more information, &gt; see Breaking changes in .NET Core 2.1 (/dotnet/core/compatibility/2.1#path-apis-dont-throw-an-exception-for-invalid-characters).</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>System.Management.Automation.SwitchParameter</maml:name>
@@ -27285,7 +27334,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="PSPath, LP">
           <maml:name>LiteralPath</maml:name>
           <maml:description>
-            <maml:para>Specifies a path to be tested. Unlike Path , the value of the LiteralPath parameter is used exactly as it is typed. No characters are interpreted as wildcard characters. If the path includes characters that could be interpreted by PowerShell as escape sequences, you must enclose the path in single quote so that they won't be interpreted.</maml:para>
+            <maml:para>Specifies a path to be tested. Unlike Path , the value of the LiteralPath parameter is used exactly as it's typed. No characters are interpreted as wildcard characters. If the path includes characters that could be interpreted by PowerShell as escape sequences, you must enclose the path in single quote so that they won't be interpreted.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
           <dev:type>
@@ -27294,11 +27343,14 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>NewerThan</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider.</maml:para>
             <maml:para>Specify a time as a DateTime object.</maml:para>
+            <maml:para>Before PowerShell 7.5, the cmdlet ignores:</maml:para>
+            <maml:para>- This parameter when you specify PathType as any value other than `Any`. - The OlderThan parameter when used with this parameter. - This parameter when Path points to a directory.</maml:para>
+            <maml:para>Starting with PowerShell 7.5, you can use this parameter with any value for the PathType parameter, to test a date range with the OlderThan parameter, and to test the age of directories.</maml:para>
             <maml:para>For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Nullable`1[[System.DateTime]]</command:parameterValue>
@@ -27308,11 +27360,14 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>OlderThan</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider.</maml:para>
             <maml:para>Specify a time as a DateTime object.</maml:para>
+            <maml:para>Before PowerShell 7.5, the cmdlet ignores:</maml:para>
+            <maml:para>- This parameter when you specify PathType as any value other than `Any`. - This parameter when used with the NewerThan parameter. - This parameter when Path points to a directory.</maml:para>
+            <maml:para>Starting with PowerShell 7.5, you can use this parameter with any value for the PathType parameter, to test a date range with the NewerThan parameter, and to test the age of directories.</maml:para>
             <maml:para>For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Nullable`1[[System.DateTime]]</command:parameterValue>
@@ -27325,13 +27380,13 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Type">
           <maml:name>PathType</maml:name>
           <maml:description>
-            <maml:para>Specifies the type of the final element in the path. This cmdlet returns `$True` if the element is of the specified type and `$False` if it is not. The acceptable values for this parameter are:</maml:para>
+            <maml:para>Specifies the type of the final element in the path. This cmdlet returns `$true` if the element is of the specified type and `$false` if it's not. The acceptable values for this parameter are:</maml:para>
             <maml:para>- `Container` - An element that contains other elements, such as a directory or registry key.</maml:para>
-            <maml:para>- `Leaf` - An element that does not contain other elements, such as a file.</maml:para>
+            <maml:para>- `Leaf` - An element that doesn't contain other elements, such as a file.</maml:para>
             <maml:para>- `Any` - Either a container or a leaf.</maml:para>
             <maml:para></maml:para>
             <maml:para>Tells whether the final element in the path is of a particular type.</maml:para>
-            <maml:para>&gt; [!CAUTION] &gt; &gt; Up to PowerShell version 6.1.2, when the IsValid and PathType switches are &gt; specified together, the `Test-Path` cmdlet ignores the PathType switch and only &gt; validates the syntactic path without validating the path type. &gt; &gt; According to issue #8607 (https://github.com/PowerShell/PowerShell/issues/8607), fixing this &gt; behavior may be a breaking change in a future version, where the IsValid and PathType &gt; switches belong to separate parameter sets, and thus, cannot be used together avoiding this &gt; confusion.</maml:para>
+            <maml:para>&gt; [!CAUTION] &gt; &gt; Up to PowerShell version 6.1.2, when the IsValid and PathType switches are specified &gt; together, the `Test-Path` cmdlet ignores the PathType switch and only validates the syntactic &gt; path without validating the path type. &gt; &gt; According to issue #8607 (https://github.com/PowerShell/PowerShell/issues/8607), fixing this &gt; behavior may be a breaking change in a future version, where the IsValid and PathType &gt; switches belong to separate parameter sets, and thus, can't be used together avoiding this &gt; confusion.</maml:para>
           </maml:description>
           <command:parameterValueGroup>
             <command:parameterValue required="false" command:variableLength="false">Any</command:parameterValue>
@@ -27375,7 +27430,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
           <maml:name>Exclude</maml:name>
           <maml:description>
-            <maml:para>Specifies items that this cmdlet omits. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as "*.txt". Wildcard characters are permitted.</maml:para>
+            <maml:para>Specifies items that this cmdlet omits. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as `*.txt`. Wildcard characters are permitted.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
           <dev:type>
@@ -27387,7 +27442,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
           <maml:name>Filter</maml:name>
           <maml:description>
-            <maml:para>Specifies a filter in the format or language of the provider. The value of this parameter qualifies the Path parameter. The syntax of the filter, including the use of wildcard characters, depends on the provider. Filters are more efficient than other parameters, because the provider applies them when it retrieves the objects instead of having PowerShell filter the objects after they are retrieved.</maml:para>
+            <maml:para>Specifies a filter in the format or language of the provider. The value of this parameter qualifies the Path parameter. The syntax of the filter, including the use of wildcard characters, depends on the provider. Filters are more efficient than other parameters, because the provider applies them when it retrieves the objects instead of having PowerShell filter the objects after they're retrieved.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
           <dev:type>
@@ -27399,7 +27454,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
           <maml:name>Include</maml:name>
           <maml:description>
-            <maml:para>Specifies paths that this cmdlet tests. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as "*.txt". Wildcard characters are permitted.</maml:para>
+            <maml:para>Specifies paths that this cmdlet tests. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as `*.txt`. Wildcard characters are permitted.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
           <dev:type>
@@ -27411,7 +27466,8 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>IsValid</maml:name>
           <maml:description>
-            <maml:para>Indicates that this cmdlet tests the syntax of the path, regardless of whether the elements of the path exist. This cmdlet returns `$True` if the path syntax is valid and `$False` if it is not.</maml:para>
+            <maml:para>Indicates that this cmdlet tests the syntax of the path, regardless of whether the elements of the path exist. This cmdlet returns `$true` if the path syntax is valid and `$false` if it's not. If the path being tested includes a drive specification, the cmdlet returns false when the drive does not exist. PowerShell returns false because it doesn't know which drive provider to test.</maml:para>
+            <maml:para>&gt; [!NOTE] &gt; A breaking change in the Path APIs was introduced in .NET 2.1. Those methods no longer check for &gt; invalid path characters. This change caused a regression in PowerShell where the IsValid check &gt; no longer tests for invalid characters. The regression will be addressed in a future release. For &gt; more information, &gt; see Breaking changes in .NET Core 2.1 (/dotnet/core/compatibility/2.1#path-apis-dont-throw-an-exception-for-invalid-characters).</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>System.Management.Automation.SwitchParameter</maml:name>
@@ -27419,11 +27475,14 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>NewerThan</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider.</maml:para>
             <maml:para>Specify a time as a DateTime object.</maml:para>
+            <maml:para>Before PowerShell 7.5, the cmdlet ignores:</maml:para>
+            <maml:para>- This parameter when you specify PathType as any value other than `Any`. - The OlderThan parameter when used with this parameter. - This parameter when Path points to a directory.</maml:para>
+            <maml:para>Starting with PowerShell 7.5, you can use this parameter with any value for the PathType parameter, to test a date range with the OlderThan parameter, and to test the age of directories.</maml:para>
             <maml:para>For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Nullable`1[[System.DateTime]]</command:parameterValue>
@@ -27433,11 +27492,14 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>OlderThan</maml:name>
           <maml:description>
             <maml:para>This is a dynamic parameter made available by the FileSystem provider.</maml:para>
             <maml:para>Specify a time as a DateTime object.</maml:para>
+            <maml:para>Before PowerShell 7.5, the cmdlet ignores:</maml:para>
+            <maml:para>- This parameter when you specify PathType as any value other than `Any`. - This parameter when used with the NewerThan parameter. - This parameter when Path points to a directory.</maml:para>
+            <maml:para>Starting with PowerShell 7.5, you can use this parameter with any value for the PathType parameter, to test a date range with the NewerThan parameter, and to test the age of directories.</maml:para>
             <maml:para>For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Nullable`1[[System.DateTime]]</command:parameterValue>
@@ -27450,13 +27512,13 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Type">
           <maml:name>PathType</maml:name>
           <maml:description>
-            <maml:para>Specifies the type of the final element in the path. This cmdlet returns `$True` if the element is of the specified type and `$False` if it is not. The acceptable values for this parameter are:</maml:para>
+            <maml:para>Specifies the type of the final element in the path. This cmdlet returns `$true` if the element is of the specified type and `$false` if it's not. The acceptable values for this parameter are:</maml:para>
             <maml:para>- `Container` - An element that contains other elements, such as a directory or registry key.</maml:para>
-            <maml:para>- `Leaf` - An element that does not contain other elements, such as a file.</maml:para>
+            <maml:para>- `Leaf` - An element that doesn't contain other elements, such as a file.</maml:para>
             <maml:para>- `Any` - Either a container or a leaf.</maml:para>
             <maml:para></maml:para>
             <maml:para>Tells whether the final element in the path is of a particular type.</maml:para>
-            <maml:para>&gt; [!CAUTION] &gt; &gt; Up to PowerShell version 6.1.2, when the IsValid and PathType switches are &gt; specified together, the `Test-Path` cmdlet ignores the PathType switch and only &gt; validates the syntactic path without validating the path type. &gt; &gt; According to issue #8607 (https://github.com/PowerShell/PowerShell/issues/8607), fixing this &gt; behavior may be a breaking change in a future version, where the IsValid and PathType &gt; switches belong to separate parameter sets, and thus, cannot be used together avoiding this &gt; confusion.</maml:para>
+            <maml:para>&gt; [!CAUTION] &gt; &gt; Up to PowerShell version 6.1.2, when the IsValid and PathType switches are specified &gt; together, the `Test-Path` cmdlet ignores the PathType switch and only validates the syntactic &gt; path without validating the path type. &gt; &gt; According to issue #8607 (https://github.com/PowerShell/PowerShell/issues/8607), fixing this &gt; behavior may be a breaking change in a future version, where the IsValid and PathType &gt; switches belong to separate parameter sets, and thus, can't be used together avoiding this &gt; confusion.</maml:para>
           </maml:description>
           <command:parameterValueGroup>
             <command:parameterValue required="false" command:variableLength="false">Any</command:parameterValue>
@@ -27488,7 +27550,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
       <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
         <maml:name>Exclude</maml:name>
         <maml:description>
-          <maml:para>Specifies items that this cmdlet omits. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as "*.txt". Wildcard characters are permitted.</maml:para>
+          <maml:para>Specifies items that this cmdlet omits. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as `*.txt`. Wildcard characters are permitted.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
         <dev:type>
@@ -27500,7 +27562,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
       <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
         <maml:name>Filter</maml:name>
         <maml:description>
-          <maml:para>Specifies a filter in the format or language of the provider. The value of this parameter qualifies the Path parameter. The syntax of the filter, including the use of wildcard characters, depends on the provider. Filters are more efficient than other parameters, because the provider applies them when it retrieves the objects instead of having PowerShell filter the objects after they are retrieved.</maml:para>
+          <maml:para>Specifies a filter in the format or language of the provider. The value of this parameter qualifies the Path parameter. The syntax of the filter, including the use of wildcard characters, depends on the provider. Filters are more efficient than other parameters, because the provider applies them when it retrieves the objects instead of having PowerShell filter the objects after they're retrieved.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
         <dev:type>
@@ -27512,7 +27574,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
       <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
         <maml:name>Include</maml:name>
         <maml:description>
-          <maml:para>Specifies paths that this cmdlet tests. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as "*.txt". Wildcard characters are permitted.</maml:para>
+          <maml:para>Specifies paths that this cmdlet tests. The value of this parameter qualifies the Path parameter. Enter a path element or pattern, such as `*.txt`. Wildcard characters are permitted.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
         <dev:type>
@@ -27524,7 +27586,8 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>IsValid</maml:name>
         <maml:description>
-          <maml:para>Indicates that this cmdlet tests the syntax of the path, regardless of whether the elements of the path exist. This cmdlet returns `$True` if the path syntax is valid and `$False` if it is not.</maml:para>
+          <maml:para>Indicates that this cmdlet tests the syntax of the path, regardless of whether the elements of the path exist. This cmdlet returns `$true` if the path syntax is valid and `$false` if it's not. If the path being tested includes a drive specification, the cmdlet returns false when the drive does not exist. PowerShell returns false because it doesn't know which drive provider to test.</maml:para>
+          <maml:para>&gt; [!NOTE] &gt; A breaking change in the Path APIs was introduced in .NET 2.1. Those methods no longer check for &gt; invalid path characters. This change caused a regression in PowerShell where the IsValid check &gt; no longer tests for invalid characters. The regression will be addressed in a future release. For &gt; more information, &gt; see Breaking changes in .NET Core 2.1 (/dotnet/core/compatibility/2.1#path-apis-dont-throw-an-exception-for-invalid-characters).</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Management.Automation.SwitchParameter</command:parameterValue>
         <dev:type>
@@ -27536,7 +27599,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="PSPath, LP">
         <maml:name>LiteralPath</maml:name>
         <maml:description>
-          <maml:para>Specifies a path to be tested. Unlike Path , the value of the LiteralPath parameter is used exactly as it is typed. No characters are interpreted as wildcard characters. If the path includes characters that could be interpreted by PowerShell as escape sequences, you must enclose the path in single quote so that they won't be interpreted.</maml:para>
+          <maml:para>Specifies a path to be tested. Unlike Path , the value of the LiteralPath parameter is used exactly as it's typed. No characters are interpreted as wildcard characters. If the path includes characters that could be interpreted by PowerShell as escape sequences, you must enclose the path in single quote so that they won't be interpreted.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
         <dev:type>
@@ -27545,11 +27608,14 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>NewerThan</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the FileSystem provider.</maml:para>
           <maml:para>Specify a time as a DateTime object.</maml:para>
+          <maml:para>Before PowerShell 7.5, the cmdlet ignores:</maml:para>
+          <maml:para>- This parameter when you specify PathType as any value other than `Any`. - The OlderThan parameter when used with this parameter. - This parameter when Path points to a directory.</maml:para>
+          <maml:para>Starting with PowerShell 7.5, you can use this parameter with any value for the PathType parameter, to test a date range with the OlderThan parameter, and to test the age of directories.</maml:para>
           <maml:para>For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Nullable`1[[System.DateTime]]</command:parameterValue>
@@ -27559,11 +27625,14 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="named" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>OlderThan</maml:name>
         <maml:description>
           <maml:para>This is a dynamic parameter made available by the FileSystem provider.</maml:para>
           <maml:para>Specify a time as a DateTime object.</maml:para>
+          <maml:para>Before PowerShell 7.5, the cmdlet ignores:</maml:para>
+          <maml:para>- This parameter when you specify PathType as any value other than `Any`. - This parameter when used with the NewerThan parameter. - This parameter when Path points to a directory.</maml:para>
+          <maml:para>Starting with PowerShell 7.5, you can use this parameter with any value for the PathType parameter, to test a date range with the NewerThan parameter, and to test the age of directories.</maml:para>
           <maml:para>For more information, see about_FileSystem_Provider (../Microsoft.PowerShell.Core/About/about_FileSystem_Provider.md).</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Nullable`1[[System.DateTime]]</command:parameterValue>
@@ -27588,13 +27657,13 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="Type">
         <maml:name>PathType</maml:name>
         <maml:description>
-          <maml:para>Specifies the type of the final element in the path. This cmdlet returns `$True` if the element is of the specified type and `$False` if it is not. The acceptable values for this parameter are:</maml:para>
+          <maml:para>Specifies the type of the final element in the path. This cmdlet returns `$true` if the element is of the specified type and `$false` if it's not. The acceptable values for this parameter are:</maml:para>
           <maml:para>- `Container` - An element that contains other elements, such as a directory or registry key.</maml:para>
-          <maml:para>- `Leaf` - An element that does not contain other elements, such as a file.</maml:para>
+          <maml:para>- `Leaf` - An element that doesn't contain other elements, such as a file.</maml:para>
           <maml:para>- `Any` - Either a container or a leaf.</maml:para>
           <maml:para></maml:para>
           <maml:para>Tells whether the final element in the path is of a particular type.</maml:para>
-          <maml:para>&gt; [!CAUTION] &gt; &gt; Up to PowerShell version 6.1.2, when the IsValid and PathType switches are &gt; specified together, the `Test-Path` cmdlet ignores the PathType switch and only &gt; validates the syntactic path without validating the path type. &gt; &gt; According to issue #8607 (https://github.com/PowerShell/PowerShell/issues/8607), fixing this &gt; behavior may be a breaking change in a future version, where the IsValid and PathType &gt; switches belong to separate parameter sets, and thus, cannot be used together avoiding this &gt; confusion.</maml:para>
+          <maml:para>&gt; [!CAUTION] &gt; &gt; Up to PowerShell version 6.1.2, when the IsValid and PathType switches are specified &gt; together, the `Test-Path` cmdlet ignores the PathType switch and only validates the syntactic &gt; path without validating the path type. &gt; &gt; According to issue #8607 (https://github.com/PowerShell/PowerShell/issues/8607), fixing this &gt; behavior may be a breaking change in a future version, where the IsValid and PathType &gt; switches belong to separate parameter sets, and thus, can't be used together avoiding this &gt; confusion.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Microsoft.PowerShell.Commands.TestPathType</command:parameterValue>
         <dev:type>
@@ -27626,7 +27695,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>The cmdlets that contain the Path noun (the Path cmdlets) work with path names and return the names in a concise format that all PowerShell providers can interpret. They are designed for use in programs and scripts where you want to display all or part of a path name in a particular format. Use them as you would use Dirname , Normpath , Realpath , Join , or other path manipulators.</maml:para>
+        <maml:para>The cmdlets that contain the Path noun (the Path cmdlets) work with path and return the names in a concise format that all PowerShell providers can interpret. They're designed for use in programs and scripts where you want to display all or part of a path in a particular format. Use them as you would use Dirname , Normpath , Realpath , Join , or other path manipulators.</maml:para>
         <maml:para>The `Test-Path` is designed to work with the data exposed by any provider. To list the providers available in your session, type `Get-PSProvider`. For more information, see about_Providers (../Microsoft.PowerShell.Core/About/about_Providers.md).</maml:para>
       </maml:alert>
     </maml:alertSet>
@@ -27637,7 +27706,7 @@ Hop Hostname                  Ping Latency Status           Source       TargetA
 
 True</dev:code>
         <dev:remarks>
-          <maml:para>This command checks whether all elements in the path exist, that is, the `C:` directory, the `Documents and Settings` directory, and the `DavidC` directory. If any are missing, the cmdlet returns `$False`. Otherwise, it returns `$True`.</maml:para>
+          <maml:para>This command checks whether all elements in the path exist, including the `C:` directory, the `Documents and Settings` directory, and the `DavidC` directory. If any are missing, the cmdlet returns `$false`. Otherwise, it returns `$true`.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -27651,7 +27720,7 @@ Test-Path -Path $profile -IsValid
 True</dev:code>
         <dev:remarks>
           <maml:para>These commands test the path of the PowerShell profile.</maml:para>
-          <maml:para>The first command determines whether all elements in the path exist. The second command determines whether the syntax of the path is correct. In this case, the path is `$False`, but the syntax is correct `$True`. These commands use `$profile`, the automatic variable that points to the location for the profile, even if the profile does not exist.</maml:para>
+          <maml:para>The first command determines whether all elements in the path exist. The second command determines whether the syntax of the path is correct. In this case, the path is `$false`, but the syntax is correct `$true`. These commands use `$profile`, the automatic variable that points to the location for the profile, even if the profile doesn't exist.</maml:para>
           <maml:para>For more information about automatic variables, see about_Automatic_Variables (../Microsoft.PowerShell.Core/About/about_Automatic_Variables.md).</maml:para>
         </dev:remarks>
       </command:example>
@@ -27663,8 +27732,8 @@ False</dev:code>
         <dev:remarks>
           <maml:para>This command checks whether there are any files in the Commercial Buildings directory other than .dwg files.</maml:para>
           <maml:para>The command uses the Path parameter to specify the path. Because the path includes a space, the path is enclosed in quotation marks. The asterisk at the end of the path indicates the contents of the Commercial Building directory. With long paths, such as this one, type the first few letters of the path, and then use the TAB key to complete the path.</maml:para>
-          <maml:para>The command specifies the Exclude parameter to specify files that will be omitted from the evaluation.</maml:para>
-          <maml:para>In this case, because the directory contains only .dwg files, the result is `$False`.</maml:para>
+          <maml:para>The command specifies the Exclude parameter to specify files to omit from the evaluation.</maml:para>
+          <maml:para>In this case, because the directory contains only .dwg files, the result is `$false`.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -27673,7 +27742,7 @@ False</dev:code>
 
 True</dev:code>
         <dev:remarks>
-          <maml:para>This command checks whether the path stored in the `$profile` variable leads to a file. In this case, because the PowerShell profile is a `.ps1` file, the cmdlet returns `$True`.</maml:para>
+          <maml:para>This command checks whether the path stored in the `$profile` variable leads to a file. In this case, because the PowerShell profile is a `.ps1` file, the cmdlet returns `$true`.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -27721,6 +27790,17 @@ Test-Path ''
 
 False
 False</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>---- Example 9: Test a path that may have an invalid drive ----</maml:title>
+        <dev:code>Test-Path -IsValid Z:\abc.txt
+Test-Path -IsValid FileSystem::Z:\abc.txt
+
+False
+True</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>

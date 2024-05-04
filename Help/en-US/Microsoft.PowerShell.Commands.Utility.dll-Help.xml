@@ -93,7 +93,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Force</maml:name>
           <maml:description>
-            <maml:para>Indicates that this cmdlet adds a new member even the object has a custom member with the same name. You can't use the Force parameter to replace a standard member of a type.</maml:para>
+            <maml:para>By default, `Add-Member` can't add a new member if the object already has a member with the same. When you use the Force parameter, `Add-Member` replaces the existing member with the new member. You can't use the Force parameter to replace a standard member of a type.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>System.Management.Automation.SwitchParameter</maml:name>
@@ -174,7 +174,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Force</maml:name>
           <maml:description>
-            <maml:para>Indicates that this cmdlet adds a new member even the object has a custom member with the same name. You can't use the Force parameter to replace a standard member of a type.</maml:para>
+            <maml:para>By default, `Add-Member` can't add a new member if the object already has a member with the same. When you use the Force parameter, `Add-Member` replaces the existing member with the new member. You can't use the Force parameter to replace a standard member of a type.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>System.Management.Automation.SwitchParameter</maml:name>
@@ -240,7 +240,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Force</maml:name>
           <maml:description>
-            <maml:para>Indicates that this cmdlet adds a new member even the object has a custom member with the same name. You can't use the Force parameter to replace a standard member of a type.</maml:para>
+            <maml:para>By default, `Add-Member` can't add a new member if the object already has a member with the same. When you use the Force parameter, `Add-Member` replaces the existing member with the new member. You can't use the Force parameter to replace a standard member of a type.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>System.Management.Automation.SwitchParameter</maml:name>
@@ -335,7 +335,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Force</maml:name>
         <maml:description>
-          <maml:para>Indicates that this cmdlet adds a new member even the object has a custom member with the same name. You can't use the Force parameter to replace a standard member of a type.</maml:para>
+          <maml:para>By default, `Add-Member` can't add a new member if the object already has a member with the same. When you use the Force parameter, `Add-Member` replaces the existing member with the new member. You can't use the Force parameter to replace a standard member of a type.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Management.Automation.SwitchParameter</command:parameterValue>
         <dev:type>
@@ -733,7 +733,8 @@ Title     : Dev Manager</dev:code>
           <maml:description>
             <maml:para>Specifies the name of an assembly that includes the types. `Add-Type` takes the types from the specified assembly. This parameter is required when you're creating types based on an assembly name.</maml:para>
             <maml:para>Enter the full or simple name, also known as the partial name, of an assembly. Wildcard characters are permitted in the assembly name. If you enter a simple or partial name, `Add-Type` resolves it to the full name, and then uses the full name to load the assembly.</maml:para>
-            <maml:para>This parameter doesn't accept a path or a filename. To enter the path to the assembly dynamic-link library (DLL) file, use the Path parameter.</maml:para>
+            <maml:para>Using the Path or LiteralPath parameters guarantees that you are loading the assembly that you intended to load. When you use the AssemblyName parameter, PowerShell asks .NET to resolve the assembly name using the standard .NET assembly resolution process. Since .NET searches the application folder first, `Add-Type` might load an assembly from `$PSHOME` instead of the version in the current folder. For more information, see Assembly location (/dotnet/standard/assembly/location).</maml:para>
+            <maml:para>If .NET fails to resolve the name, PowerShell then looks in the current location to find the assembly. When you use wildcards in the AssemblyName parameter, the .NET assembly resolution process fails causing PowerShell to look in the current location.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
           <dev:type>
@@ -796,7 +797,7 @@ Title     : Dev Manager</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Language</maml:name>
           <maml:description>
-            <maml:para>Specifies the language that is used in the source code. The acceptable value for this parameter is - `CSharp`</maml:para>
+            <maml:para>Specifies the language that is used in the source code. The acceptable value for this parameter is `CSharp`.</maml:para>
           </maml:description>
           <command:parameterValueGroup>
             <command:parameterValue required="false" command:variableLength="false">CSharp</command:parameterValue>
@@ -923,7 +924,7 @@ Title     : Dev Manager</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Language</maml:name>
           <maml:description>
-            <maml:para>Specifies the language that is used in the source code. The acceptable value for this parameter is - `CSharp`</maml:para>
+            <maml:para>Specifies the language that is used in the source code. The acceptable value for this parameter is `CSharp`.</maml:para>
           </maml:description>
           <command:parameterValueGroup>
             <command:parameterValue required="false" command:variableLength="false">CSharp</command:parameterValue>
@@ -1028,7 +1029,7 @@ Title     : Dev Manager</dev:code>
           <maml:description>
             <maml:para>Specifies the path to source code files or assembly DLL files that contain the types.</maml:para>
             <maml:para>If you submit source code files, `Add-Type` compiles the code in the files and creates an in-memory assembly of the types. The file extension specified in the value of Path determines the compiler that `Add-Type` uses.</maml:para>
-            <maml:para>If you submit an assembly file, `Add-Type` takes the types from the assembly. To specify an in-memory assembly or the global assembly cache, use the AssemblyName parameter.</maml:para>
+            <maml:para>Using the Path or LiteralPath parameters guarantees that you are loading the assembly that you intended to load.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
           <dev:type>
@@ -1151,6 +1152,7 @@ Title     : Dev Manager</dev:code>
           <maml:name>LiteralPath</maml:name>
           <maml:description>
             <maml:para>Specifies the path to source code files or assembly DLL files that contain the types. Unlike Path , the value of the LiteralPath parameter is used exactly as it's typed. No characters are interpreted as wildcards. If the path includes escape characters, enclose it in single quotation marks. Single quotation marks tell PowerShell not to interpret any characters as escape sequences.</maml:para>
+            <maml:para>Using the Path or LiteralPath parameters guarantees that you are loading the assembly that you intended to load.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
           <dev:type>
@@ -1226,7 +1228,8 @@ Title     : Dev Manager</dev:code>
         <maml:description>
           <maml:para>Specifies the name of an assembly that includes the types. `Add-Type` takes the types from the specified assembly. This parameter is required when you're creating types based on an assembly name.</maml:para>
           <maml:para>Enter the full or simple name, also known as the partial name, of an assembly. Wildcard characters are permitted in the assembly name. If you enter a simple or partial name, `Add-Type` resolves it to the full name, and then uses the full name to load the assembly.</maml:para>
-          <maml:para>This parameter doesn't accept a path or a filename. To enter the path to the assembly dynamic-link library (DLL) file, use the Path parameter.</maml:para>
+          <maml:para>Using the Path or LiteralPath parameters guarantees that you are loading the assembly that you intended to load. When you use the AssemblyName parameter, PowerShell asks .NET to resolve the assembly name using the standard .NET assembly resolution process. Since .NET searches the application folder first, `Add-Type` might load an assembly from `$PSHOME` instead of the version in the current folder. For more information, see Assembly location (/dotnet/standard/assembly/location).</maml:para>
+          <maml:para>If .NET fails to resolve the name, PowerShell then looks in the current location to find the assembly. When you use wildcards in the AssemblyName parameter, the .NET assembly resolution process fails causing PowerShell to look in the current location.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
         <dev:type>
@@ -1263,7 +1266,7 @@ Title     : Dev Manager</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Language</maml:name>
         <maml:description>
-          <maml:para>Specifies the language that is used in the source code. The acceptable value for this parameter is - `CSharp`</maml:para>
+          <maml:para>Specifies the language that is used in the source code. The acceptable value for this parameter is `CSharp`.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Microsoft.PowerShell.Commands.Language</command:parameterValue>
         <dev:type>
@@ -1276,6 +1279,7 @@ Title     : Dev Manager</dev:code>
         <maml:name>LiteralPath</maml:name>
         <maml:description>
           <maml:para>Specifies the path to source code files or assembly DLL files that contain the types. Unlike Path , the value of the LiteralPath parameter is used exactly as it's typed. No characters are interpreted as wildcards. If the path includes escape characters, enclose it in single quotation marks. Single quotation marks tell PowerShell not to interpret any characters as escape sequences.</maml:para>
+          <maml:para>Using the Path or LiteralPath parameters guarantees that you are loading the assembly that you intended to load.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
         <dev:type>
@@ -1370,7 +1374,7 @@ Title     : Dev Manager</dev:code>
         <maml:description>
           <maml:para>Specifies the path to source code files or assembly DLL files that contain the types.</maml:para>
           <maml:para>If you submit source code files, `Add-Type` compiles the code in the files and creates an in-memory assembly of the types. The file extension specified in the value of Path determines the compiler that `Add-Type` uses.</maml:para>
-          <maml:para>If you submit an assembly file, `Add-Type` takes the types from the assembly. To specify an in-memory assembly or the global assembly cache, use the AssemblyName parameter.</maml:para>
+          <maml:para>Using the Path or LiteralPath parameters guarantees that you are loading the assembly that you intended to load.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
         <dev:type>
@@ -1451,7 +1455,7 @@ Title     : Dev Manager</dev:code>
       <maml:alert>
         <maml:para>The types that you add exist only in the current session. To use the types in all sessions, add them to your PowerShell profile. For more information about the profile, see about_Profiles (../Microsoft.PowerShell.Core/About/about_Profiles.md).</maml:para>
         <maml:para>Type names and namespaces must be unique within a session. You can't unload a type or change it. If you need to change the code for a type, you must change the name or start a new PowerShell session. Otherwise, the command fails.</maml:para>
-        <maml:para>In Windows PowerShell (version 5.1 and below), you need to use `Add-Type` for anything that isn't already loaded. Most commonly, this applies to assemblies found in the Global Assembly Cache (GAC). In PowerShell 6 and higher, there is no GAC, so PowerShell installs its own assemblies in `$PSHome`. These assemblies are automatically loaded on request, so there's no need to use `Add-Type` to load them. However, using `Add-Type` is still permitted to allow scripts to be implicitly compatible with any version of PowerShell.</maml:para>
+        <maml:para>In Windows PowerShell (version 5.1 and below), you need to use `Add-Type` for anything that isn't already loaded. Most commonly, this applies to assemblies found in the Global Assembly Cache (GAC). In PowerShell 6 and higher, there is no GAC, so PowerShell installs its own assemblies in `$PSHOME`. These assemblies are automatically loaded on request, so there's no need to use `Add-Type` to load them. However, using `Add-Type` is still permitted to allow scripts to be implicitly compatible with any version of PowerShell.</maml:para>
         <maml:para>Assemblies in the GAC can be loaded by type name, rather than by path. Loading assemblies from an arbitrary path requires `Add-Type`, since those assemblies cannot not be loaded automatically.</maml:para>
       </maml:alert>
     </maml:alertSet>
@@ -1541,7 +1545,13 @@ $AccType = Add-Type -AssemblyName *jsonschema* -PassThru</dev:code>
 [DllImport("user32.dll")]public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
 "@
 
-$ShowWindowAsync = Add-Type -MemberDefinition $Signature -Name "Win32ShowWindowAsync" -Namespace Win32Functions -PassThru
+$addTypeSplat = @{
+    MemberDefinition = $Signature
+    Name = "Win32ShowWindowAsync"
+    Namespace = 'Win32Functions'
+    PassThru = $true
+}
+$ShowWindowAsync = Add-Type @addTypeSplat
 
 # Minimize the PowerShell console
 
@@ -1551,7 +1561,7 @@ $ShowWindowAsync::ShowWindowAsync((Get-Process -Id $pid).MainWindowHandle, 2)
 
 $ShowWindowAsync::ShowWindowAsync((Get-Process -Id $Pid).MainWindowHandle, 4)</dev:code>
         <dev:remarks>
-          <maml:para>The `$Signature` variable stores the C# signature of the `ShowWindowAsync` function. To ensure that the resulting method is visible in a PowerShell session, the `public` keyword was added to the standard signature. For more information, see ShowWindowAsync function (/windows/win32/api/winuser/nf-winuser-showwindowasync).</maml:para>
+          <maml:para>The `$Signature` variable stores the C# signature of the `ShowWindowAsync` function. To ensure that the resulting method is visible in a PowerShell session, the `public` keyword was added to the standard signature. For more information, see ShowWindowAsync (/windows/win32/api/winuser/nf-winuser-showwindowasync)function.</maml:para>
           <maml:para>The `$ShowWindowAsync` variable stores the object created by the `Add-Type` PassThru parameter. The `Add-Type` cmdlet adds the `ShowWindowAsync` function to the PowerShell session as a static method. The command uses the MemberDefinition parameter to specify the method definition saved in the `$Signature` variable. The command uses the Name and Namespace parameters to specify a name and namespace for the class. The PassThru parameter generates an object that represents the types.</maml:para>
           <maml:para>The new `ShowWindowAsync` static method is used in the commands to minimize and restore the PowerShell console. The method takes two parameters: the window handle, and an integer that specifies how the window is displayed.</maml:para>
           <maml:para>To minimize the PowerShell console, `ShowWindowAsync` uses the `Get-Process` cmdlet with the `$PID` automatic variable to get the process that is hosting the current PowerShell session. Then it uses the MainWindowHandle property of the current process and a value of `2`, which represents the `SW_MINIMIZE` value.</maml:para>
@@ -2678,7 +2688,7 @@ ConvertFrom-Csv -InputObject $Services -UseCulture</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>AsHashtable</maml:name>
           <maml:description>
-            <maml:para>Converts the JSON to an hash table object. This switch was introduced in PowerShell 6.0. Starting with PowerShell 7.3, the object is an OrderedHashtable and preserves the ordering of the keys from the JSON. In prior versions, the object is a Hashtable .</maml:para>
+            <maml:para>Converts the JSON to a hash table object. This switch was introduced in PowerShell 6.0. Starting with PowerShell 7.3, the object is an OrderedHashtable and preserves the ordering of the keys from the JSON. In prior versions, the object is a Hashtable .</maml:para>
             <maml:para>There are several scenarios where it can overcome some limitations of the `ConvertFrom-Json` cmdlet.</maml:para>
             <maml:para>- Without this switch, when two or more keys in a JSON object are case-insensitively identical, they   are treated as identical keys. In that case, only the last of those case-insensitively identical   keys is included in the converted object. - Without this switch, the cmdlet throws an error whenever the JSON contains a key that's an empty   string. PSCustomObject can't have property names that are empty strings. For example, this can   occur in `project.lock.json` files. - Hash tables can be processed faster for certain data structures.</maml:para>
           </maml:description>
@@ -2719,7 +2729,7 @@ ConvertFrom-Csv -InputObject $Services -UseCulture</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>AsHashtable</maml:name>
         <maml:description>
-          <maml:para>Converts the JSON to an hash table object. This switch was introduced in PowerShell 6.0. Starting with PowerShell 7.3, the object is an OrderedHashtable and preserves the ordering of the keys from the JSON. In prior versions, the object is a Hashtable .</maml:para>
+          <maml:para>Converts the JSON to a hash table object. This switch was introduced in PowerShell 6.0. Starting with PowerShell 7.3, the object is an OrderedHashtable and preserves the ordering of the keys from the JSON. In prior versions, the object is a Hashtable .</maml:para>
           <maml:para>There are several scenarios where it can overcome some limitations of the `ConvertFrom-Json` cmdlet.</maml:para>
           <maml:para>- Without this switch, when two or more keys in a JSON object are case-insensitively identical, they   are treated as identical keys. In that case, only the last of those case-insensitively identical   keys is included in the converted object. - Without this switch, the cmdlet throws an error whenever the JSON contains a key that's an empty   string. PSCustomObject can't have property names that are empty strings. For example, this can   occur in `project.lock.json` files. - Hash tables can be processed faster for certain data structures.</maml:para>
         </maml:description>
@@ -2901,7 +2911,7 @@ Without -NoEnumerate: 1</dev:code>
     </command:details>
     <maml:description>
       <maml:para>This cmdlet converts the specified content into a MarkdownInfo . When a file path is specified for the Path parameter, the contents on the file are converted. The output object has three properties:</maml:para>
-      <maml:para>- The Token property has the abstract syntax tree (AST) of the the converted object - The Html property has the HTML conversion of the specified input - The VT100EncodedString property has the converted string with ANSI (VT100) escape sequences if   the AsVT100EncodedString parameter was specified</maml:para>
+      <maml:para>- The Token property has the abstract syntax tree (AST) of the converted object - The Html property has the HTML conversion of the specified input - The VT100EncodedString property has the converted string with ANSI (VT100) escape sequences if   the AsVT100EncodedString parameter was specified</maml:para>
       <maml:para>This cmdlet was introduced in PowerShell 6.1.</maml:para>
     </maml:description>
     <command:syntax>
@@ -3122,18 +3132,6 @@ Without -NoEnumerate: 1</dev:code>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>ConvertFrom-StringData</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
-          <maml:name>Delimiter</maml:name>
-          <maml:description>
-            <maml:para>The character used to separate the key from the value data in the string being converted. The default delimiter is the equals sign (`=`) character. This parameter was added in PowerShell 7.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.Char</command:parameterValue>
-          <dev:type>
-            <maml:name>System.Char</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>'='</dev:defaultValue>
-        </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="none">
           <maml:name>StringData</maml:name>
           <maml:description>
@@ -3149,10 +3147,22 @@ Without -NoEnumerate: 1</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Delimiter</maml:name>
+          <maml:description>
+            <maml:para>The character used to separate the key from the value data in the string being converted. The default delimiter is the equals sign (`=`) character. This parameter was added in PowerShell 7.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Char</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Char</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>'='</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Delimiter</maml:name>
         <maml:description>
           <maml:para>The character used to separate the key from the value data in the string being converted. The default delimiter is the equals sign (`=`) character. This parameter was added in PowerShell 7.</maml:para>
@@ -6992,7 +7002,7 @@ Invoke-Command -Session $S -FilePath .\alias.ps1</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>The `Export-Clixml` cmdlet creates a Common Language Infrastructure (CLI) XML-based representation of an object or objects and stores it in a file. You can then use the `Import-Clixml` cmdlet to recreate the saved object based on the contents of that file. For more information about CLI, see Language independence (/dotnet/standard/language-independence).</maml:para>
+      <maml:para>The `Export-Clixml` cmdlet serialized an object into a Common Language Infrastructure (CLI) XML-based representation stores it in a file. You can then use the `Import-Clixml` cmdlet to recreate the saved object based on the contents of that file. For more information about CLI, see Language independence (/dotnet/standard/language-independence).</maml:para>
       <maml:para>This cmdlet is similar to `ConvertTo-Xml`, except that `Export-Clixml` stores the resulting XML in a file. `ConvertTo-XML` returns the XML, so you can continue to process it in PowerShell.</maml:para>
       <maml:para>A valuable use of `Export-Clixml` on Windows computers is to export credentials and secure strings securely as XML. For an example, see Example 3.</maml:para>
     </maml:description>
@@ -9682,7 +9692,7 @@ Failed to evaluate expression " $_ / $null ".
           <maml:name>InputObject</maml:name>
           <maml:description>
             <maml:para>Specifies the objects to be formatted. Enter a variable that contains the objects or type a command or expression that gets the objects.</maml:para>
-            <maml:para>Only certain scalar types and `[system.io.fileinfo]` are supported.</maml:para>
+            <maml:para>Only certain scalar (/powershell/scripting/learn/glossary#scalar-value)types and `[system.io.fileinfo]` are supported.</maml:para>
             <maml:para>The supported scalar types are:</maml:para>
             <maml:para>- `[string]`, `[char]`</maml:para>
             <maml:para>- `[byte]`, `[sbyte]`</maml:para>
@@ -9853,7 +9863,7 @@ Failed to evaluate expression " $_ / $null ".
         <maml:name>InputObject</maml:name>
         <maml:description>
           <maml:para>Specifies the objects to be formatted. Enter a variable that contains the objects or type a command or expression that gets the objects.</maml:para>
-          <maml:para>Only certain scalar types and `[system.io.fileinfo]` are supported.</maml:para>
+          <maml:para>Only certain scalar (/powershell/scripting/learn/glossary#scalar-value)types and `[system.io.fileinfo]` are supported.</maml:para>
           <maml:para>The supported scalar types are:</maml:para>
           <maml:para>- `[string]`, `[char]`</maml:para>
           <maml:para>- `[byte]`, `[sbyte]`</maml:para>
@@ -11893,7 +11903,7 @@ LCID             Name             DisplayName
     </command:details>
     <maml:description>
       <maml:para>The `Get-Date` cmdlet gets a DateTime object that represents the current date or a date that you specify. `Get-Date` can format the date and time in several .NET and UNIX formats. You can use `Get-Date` to generate a date or time character string, and then send the string to other cmdlets or programs.</maml:para>
-      <maml:para>`Get-Date` uses the computer's culture settings to determine how the output is formatted. To view your computer's settings, use `(Get-Culture).DateTimeFormat`.</maml:para>
+      <maml:para>`Get-Date` uses the current culture settings of the operating system to determine how the output is formatted. To view your computer's settings, use `(Get-Culture).DateTimeFormat`.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -11901,8 +11911,7 @@ LCID             Name             DisplayName
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="LastWriteTime">
           <maml:name>Date</maml:name>
           <maml:description>
-            <maml:para>Specifies a date and time. Time is optional and if not specified, returns 00:00:00.</maml:para>
-            <maml:para>Enter the date and time in a format that is standard for the system locale.</maml:para>
+            <maml:para>Specifies a date and time. Time is optional and if not specified, returns 00:00:00. Enter the date and time in a format that is standard for the currently selected locale. You can change the current locale using the `Set-Culture` cmdlet.</maml:para>
             <maml:para>For example, in US English:</maml:para>
             <maml:para>`Get-Date -Date "6/25/2019 12:30:22"` returns Tuesday, June 25, 2019 12:30:22</maml:para>
           </maml:description>
@@ -11929,7 +11938,7 @@ LCID             Name             DisplayName
           <maml:name>Day</maml:name>
           <maml:description>
             <maml:para>Specifies the day of the month that is displayed. Enter a value from 1 to 31.</maml:para>
-            <maml:para>If the specified value is greater than the number of days in a month, PowerShell adds the number of days to the month. For example, `Get-Date -Month 2 -Day 31` displays March 3 , not February 31 .</maml:para>
+            <maml:para>If the specified value is greater than the number of days in a month, PowerShell adds the number of days to the month. For example, `Get-Date -Month 4 -Day 31` displays May 1 , not April 31 .</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Int32</command:parameterValue>
           <dev:type>
@@ -11961,7 +11970,7 @@ LCID             Name             DisplayName
           <maml:name>Format</maml:name>
           <maml:description>
             <maml:para>Displays the date and time in the Microsoft .NET Framework format indicated by the format specifier. The Format parameter outputs a String object.</maml:para>
-            <maml:para>For a list of available .NET format specifiers, see Custom date and time format strings (/dotnet/standard/base-types/custom-date-and-time-format-strings?view=netframework-4.8).</maml:para>
+            <maml:para>For a list of available .NET format specifiers, see Custom date and time format strings (/dotnet/standard/base-types/custom-date-and-time-format-strings).</maml:para>
             <maml:para>When the Format parameter is used, `Get-Date` only gets the DateTime object's properties necessary to display the date. As a result, some of the properties and methods of DateTime objects might not be available.</maml:para>
             <maml:para>Starting in PowerShell 5.0, you can use the following additional formats as values for the Format parameter.</maml:para>
             <maml:para>- FileDate . A file or path-friendly representation of the current date in local time. The format   is `yyyyMMdd` (case-sensitive, using a 4-digit year, 2-digit month, and 2-digit day). For example:   20190627.</maml:para>
@@ -12055,8 +12064,7 @@ LCID             Name             DisplayName
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="LastWriteTime">
           <maml:name>Date</maml:name>
           <maml:description>
-            <maml:para>Specifies a date and time. Time is optional and if not specified, returns 00:00:00.</maml:para>
-            <maml:para>Enter the date and time in a format that is standard for the system locale.</maml:para>
+            <maml:para>Specifies a date and time. Time is optional and if not specified, returns 00:00:00. Enter the date and time in a format that is standard for the currently selected locale. You can change the current locale using the `Set-Culture` cmdlet.</maml:para>
             <maml:para>For example, in US English:</maml:para>
             <maml:para>`Get-Date -Date "6/25/2019 12:30:22"` returns Tuesday, June 25, 2019 12:30:22</maml:para>
           </maml:description>
@@ -12083,7 +12091,7 @@ LCID             Name             DisplayName
           <maml:name>Day</maml:name>
           <maml:description>
             <maml:para>Specifies the day of the month that is displayed. Enter a value from 1 to 31.</maml:para>
-            <maml:para>If the specified value is greater than the number of days in a month, PowerShell adds the number of days to the month. For example, `Get-Date -Month 2 -Day 31` displays March 3 , not February 31 .</maml:para>
+            <maml:para>If the specified value is greater than the number of days in a month, PowerShell adds the number of days to the month. For example, `Get-Date -Month 4 -Day 31` displays May 1 , not April 31 .</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Int32</command:parameterValue>
           <dev:type>
@@ -12216,7 +12224,7 @@ LCID             Name             DisplayName
           <maml:name>Day</maml:name>
           <maml:description>
             <maml:para>Specifies the day of the month that is displayed. Enter a value from 1 to 31.</maml:para>
-            <maml:para>If the specified value is greater than the number of days in a month, PowerShell adds the number of days to the month. For example, `Get-Date -Month 2 -Day 31` displays March 3 , not February 31 .</maml:para>
+            <maml:para>If the specified value is greater than the number of days in a month, PowerShell adds the number of days to the month. For example, `Get-Date -Month 4 -Day 31` displays May 1 , not April 31 .</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Int32</command:parameterValue>
           <dev:type>
@@ -12248,7 +12256,7 @@ LCID             Name             DisplayName
           <maml:name>Format</maml:name>
           <maml:description>
             <maml:para>Displays the date and time in the Microsoft .NET Framework format indicated by the format specifier. The Format parameter outputs a String object.</maml:para>
-            <maml:para>For a list of available .NET format specifiers, see Custom date and time format strings (/dotnet/standard/base-types/custom-date-and-time-format-strings?view=netframework-4.8).</maml:para>
+            <maml:para>For a list of available .NET format specifiers, see Custom date and time format strings (/dotnet/standard/base-types/custom-date-and-time-format-strings).</maml:para>
             <maml:para>When the Format parameter is used, `Get-Date` only gets the DateTime object's properties necessary to display the date. As a result, some of the properties and methods of DateTime objects might not be available.</maml:para>
             <maml:para>Starting in PowerShell 5.0, you can use the following additional formats as values for the Format parameter.</maml:para>
             <maml:para>- FileDate . A file or path-friendly representation of the current date in local time. The format   is `yyyyMMdd` (case-sensitive, using a 4-digit year, 2-digit month, and 2-digit day). For example:   20190627.</maml:para>
@@ -12368,7 +12376,7 @@ LCID             Name             DisplayName
           <maml:name>Day</maml:name>
           <maml:description>
             <maml:para>Specifies the day of the month that is displayed. Enter a value from 1 to 31.</maml:para>
-            <maml:para>If the specified value is greater than the number of days in a month, PowerShell adds the number of days to the month. For example, `Get-Date -Month 2 -Day 31` displays March 3 , not February 31 .</maml:para>
+            <maml:para>If the specified value is greater than the number of days in a month, PowerShell adds the number of days to the month. For example, `Get-Date -Month 4 -Day 31` displays May 1 , not April 31 .</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Int32</command:parameterValue>
           <dev:type>
@@ -12514,8 +12522,7 @@ LCID             Name             DisplayName
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="LastWriteTime">
         <maml:name>Date</maml:name>
         <maml:description>
-          <maml:para>Specifies a date and time. Time is optional and if not specified, returns 00:00:00.</maml:para>
-          <maml:para>Enter the date and time in a format that is standard for the system locale.</maml:para>
+          <maml:para>Specifies a date and time. Time is optional and if not specified, returns 00:00:00. Enter the date and time in a format that is standard for the currently selected locale. You can change the current locale using the `Set-Culture` cmdlet.</maml:para>
           <maml:para>For example, in US English:</maml:para>
           <maml:para>`Get-Date -Date "6/25/2019 12:30:22"` returns Tuesday, June 25, 2019 12:30:22</maml:para>
         </maml:description>
@@ -12530,7 +12537,7 @@ LCID             Name             DisplayName
         <maml:name>Day</maml:name>
         <maml:description>
           <maml:para>Specifies the day of the month that is displayed. Enter a value from 1 to 31.</maml:para>
-          <maml:para>If the specified value is greater than the number of days in a month, PowerShell adds the number of days to the month. For example, `Get-Date -Month 2 -Day 31` displays March 3 , not February 31 .</maml:para>
+          <maml:para>If the specified value is greater than the number of days in a month, PowerShell adds the number of days to the month. For example, `Get-Date -Month 4 -Day 31` displays May 1 , not April 31 .</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Int32</command:parameterValue>
         <dev:type>
@@ -12557,7 +12564,7 @@ LCID             Name             DisplayName
         <maml:name>Format</maml:name>
         <maml:description>
           <maml:para>Displays the date and time in the Microsoft .NET Framework format indicated by the format specifier. The Format parameter outputs a String object.</maml:para>
-          <maml:para>For a list of available .NET format specifiers, see Custom date and time format strings (/dotnet/standard/base-types/custom-date-and-time-format-strings?view=netframework-4.8).</maml:para>
+          <maml:para>For a list of available .NET format specifiers, see Custom date and time format strings (/dotnet/standard/base-types/custom-date-and-time-format-strings).</maml:para>
           <maml:para>When the Format parameter is used, `Get-Date` only gets the DateTime object's properties necessary to display the date. As a result, some of the properties and methods of DateTime objects might not be available.</maml:para>
           <maml:para>Starting in PowerShell 5.0, you can use the following additional formats as values for the Format parameter.</maml:para>
           <maml:para>- FileDate . A file or path-friendly representation of the current date in local time. The format   is `yyyyMMdd` (case-sensitive, using a 4-digit year, 2-digit month, and 2-digit day). For example:   20190627.</maml:para>
@@ -12690,7 +12697,7 @@ LCID             Name             DisplayName
         <maml:description>
           <maml:para>By default, this cmdlet returns a DateTime object.</maml:para>
           <maml:para>When a DateTime object is sent down the pipeline to a cmdlet such as `Add-Content` that expects string input, PowerShell converts the object to a String object.</maml:para>
-          <maml:para>The method `(Get-Date).ToString()` converts a DateTime object a String object.</maml:para>
+          <maml:para>The `ToString()` converts a DateTime object to a String using the current culture setting. However, PowerShell expression interpretation always uses the invariant culture setting. To see how invariant culture is different, see Example 11 (#example-11-show-invariant-culture).</maml:para>
           <maml:para>To display an object's properties and methods, send the object down the pipeline to `Get-Member`. For example, `Get-Date | Get-Member`.</maml:para>
         </maml:description>
       </command:returnValue>
@@ -12705,7 +12712,7 @@ LCID             Name             DisplayName
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>DateTime objects are in long-date and long-time formats for the system locale.</maml:para>
+        <maml:para>The default formats for the output of DateTime objects are long-date and long-time formats for the currently selected locale.</maml:para>
         <maml:para>The valid UFormat specifiers are displayed in the following table:</maml:para>
         <maml:para>&gt; [!IMPORTANT] &gt; UFormat specifiers are changed or added in newer versions of PowerShell. For example, `%F` was &gt; added in PowerShell 6.2, so it isn't available in Windows PowerShell 5.1 or older. Keep this in &gt; mind when using UFormat specifiers in scripts designed to be run on multiple versions of &gt; PowerShell.</maml:para>
         <maml:para>| Format specifier |                                 Meaning                     |         Example          | | ---- | ----------------------------------------------------------------------- | ------------------------ | | `%A` | Day of the week - full name                                             | Monday                   | | `%a` | Day of the week - abbreviated name                                      | Mon                      | | `%B` | Month name - full                                                       | January                  | | `%b` | Month name - abbreviated                                                | Jan                      | | `%C` | Century                                                                 | 20 for 2019              | | `%c` | Date and time - abbreviated                                             | Thu Jun 27 08:44:18 2019 | | `%D` | Date in mm/dd/yy format                                                 | 06/27/19                 | | `%d` | Day of the month - 2 digits                                             | 05                       | | `%e` | Day of the month - preceded by a space if only a single digit           | &lt;space&gt;5               | | `%F` | Date in YYYY-mm-dd format, equal to %Y-%m-%d (the ISO 8601 date format) | 2019-06-27               | | `%G` | ISO week date year (year containing Thursday of the week)               |                          | | `%g` | Same as 'G' - 2 digits                                                  |                          | | `%H` | Hour in 24-hour format                                                  | 17                       | | `%h` | Same as 'b'                                                             |                          | | `%I` | Hour in 12-hour format                                                  | 05                       | | `%j` | Day of the year                                                         | 1-366                    | | `%k` | Same as 'H'                                                             |                          | | `%l` | Same as 'I' (Upper-case I)                                              | 05                       | | `%M` | Minutes                                                                 | 35                       | | `%m` | Month number                                                            | 06                       | | `%n` | newline character                                                       |                          | | `%p` | AM or PM                                                                |                          | | `%R` | Time in 24-hour format -no seconds                                      | 17:45                    | | `%r` | Time in 12-hour format                                                  | 09:15:36 AM              | | `%S` | Seconds                                                                 | 05                       | | `%s` | Seconds elapsed since January 1, 1970 00:00:00 (UTC)                    | 1150451174               | | `%t` | Horizontal tab character                                                |                          | | `%T` | Time in 24-hour format                                                  | 17:45:52                 | | `%U` | Same as 'W'                                                             |                          | | `%u` | Numeric day of the week (1-7) (Changed in PowerShell 7.2)               | Monday = 1, Sunday = 7   | | `%V` | Week of the year                                                        | 01-53                    | | `%w` | Numeric day of the week (0-6)                                           | Sunday = 0, Saturday = 6 | | `%W` | Week of the year                                                        | 00-52                    | | `%X` | Same as 'T'                                                             |                          | | `%x` | Date in standard format for locale                                      | 06/27/19 for English-US  | | `%Y` | Year in 4-digit format                                                  | 2019                     | | `%y` | Year in 2-digit format                                                  | 19                       | | `%Z` | Time zone offset from Universal Time Coordinate (UTC)                   | -07                      |</maml:para>
@@ -12740,7 +12747,7 @@ Tuesday 06/25/2019 16:17 -07:00</dev:code>
           <maml:para>`Get-Date` uses the Format parameter to specify several format specifiers.</maml:para>
           <maml:para>The .NET format specifiers used in this example are defined as follows:</maml:para>
           <maml:para>| Specifier |                      Definition                       | | --------- | ----------------------------------------------------- | | `dddd`    | Day of the week - full name                           | | `MM`      | Month number                                          | | `dd`      | Day of the month - 2 digits                           | | `yyyy`    | Year in 4-digit format                                | | `HH:mm`   | Time in 24-hour format - no seconds                   | | `K`       | Time zone offset from Universal Time Coordinate (UTC) |</maml:para>
-          <maml:para>For more information about .NET format specifiers, see Custom date and time format strings (/dotnet/standard/base-types/custom-date-and-time-format-strings?view=netframework-4.8).</maml:para>
+          <maml:para>For more information about .NET format specifiers, see Custom date and time format strings (/dotnet/standard/base-types/custom-date-and-time-format-strings).</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -12765,13 +12772,13 @@ Tuesday 06/25/2019 16:19 -07</dev:code>
         </dev:remarks>
       </command:example>
       <command:example>
-        <maml:title>Example 6: Check if a date is adjusted for daylight savings time</maml:title>
+        <maml:title>Example 6: Check if a date is adjusted for daylight saving time</maml:title>
         <dev:code>$DST = Get-Date
 $DST.IsDaylightSavingTime()
 
 True</dev:code>
         <dev:remarks>
-          <maml:para>A variable, `$DST` stores the result of `Get-Date`. `$DST` uses the IsDaylightSavingTime method to test if the date is adjusted for daylight savings time.</maml:para>
+          <maml:para>A variable, `$DST` stores the result of `Get-Date`. `$DST` uses the IsDaylightSavingTime method to test if the date is adjusted for daylight saving time.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -12785,7 +12792,7 @@ Wednesday June/26/2019 10:45:26 -07
 Wednesday, June 26, 2019 17:45:26</dev:code>
         <dev:remarks>
           <maml:para>`Get-Date` uses the UFormat parameter with format specifiers to display the current system date and time. The format specifier %Z represents the UTC offset of -07 .</maml:para>
-          <maml:para>The `$Time` variable stores the current system date and time. `$Time` uses the ToUniversalTime() method to convert the time based on the computer's UTC offset.</maml:para>
+          <maml:para>The `$Time` variable stores the current system date and time. `$Time` uses the `ToUniversalTime()` method to convert the time based on the computer's UTC offset.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -12840,6 +12847,21 @@ Wednesday, January 1, 2020 8:00:00 AM</dev:code>
           <maml:para></maml:para>
         </dev:remarks>
       </command:example>
+      <command:example>
+        <maml:title>-------------- Example 11: Show invariant culture --------------</maml:title>
+        <dev:code># Get date using current culture en-US
+(Get-Date 2024-03-19).ToString()
+
+3/19/2024 12:00:00 AM
+
+# Get date using invariant culture
+"$(Get-Date 2024-03-19)"
+
+03/19/2024 00:00:00</dev:code>
+        <dev:remarks>
+          <maml:para></maml:para>
+        </dev:remarks>
+      </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
@@ -12869,6 +12891,10 @@ Wednesday, January 1, 2020 8:00:00 AM</dev:code>
       <maml:navigationLink>
         <maml:linkText>Set-Date</maml:linkText>
         <maml:uri></maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>Set-Culture</maml:linkText>
+        <maml:uri>xref:International.Set-Culture</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -18002,9 +18028,11 @@ Name           Value
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>The `Import-Clixml` cmdlet imports a Common Language Infrastructure (CLI) XML file with data that represents Microsoft .NET Framework objects and creates the PowerShell objects. For more information about CLI, see Language independence (/dotnet/standard/language-independence).</maml:para>
-      <maml:para>A valuable use of `Import-Clixml` on Windows computers is to import credentials and secure strings that were exported as secure XML using `Export-Clixml`. For an example, see Example 2.</maml:para>
+      <maml:para>The `Import-Clixml` cmdlet imports objects that have been serialized into a Common Language Infrastructure (CLI) XML file. A valuable use of `Import-Clixml` on Windows computers is to import credentials and secure strings that were exported as secure XML using `Export-Clixml`. Example #2 (#example-2-import-a-secure-credential-object)shows how to use `Import-Clixml` to import a secure credential object.</maml:para>
+      <maml:para>The CLIXML data is deserialized back into PowerShell objects. However, the deserialized objects aren't a live objects. They are a snapshot of the objects at the time of serialization. The deserialized objects include properties but no methods.</maml:para>
+      <maml:para>The TypeNames property contains the original type name prefixed with `Deserialized`. Example #3 (#example-3-inspect-the-typenames-property-of-a-deserialized-object)show the TypeNames property of a deserialized object.</maml:para>
       <maml:para>`Import-Clixml` uses the byte-order-mark (BOM) to detect the encoding format of the file. If the file has no BOM, it assumes the encoding is UTF8.</maml:para>
+      <maml:para>For more information about CLI, see Language independence (/dotnet/standard/language-independence).</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -18215,6 +18243,47 @@ $Credential = Import-Clixml $Credxmlpath</dev:code>
           <maml:para>In the example, the file in which the credential is stored is represented by `TestScript.ps1.credential`. Replace TestScript with the name of the script with which you're loading the credential.</maml:para>
           <maml:para>You send the credential object down the pipeline to `Export-Clixml`, and save it to the path, `$Credxmlpath`, that you specified in the first command.</maml:para>
           <maml:para>To import the credential automatically into your script, run the final two commands. Run `Import-Clixml` to import the secured credential object into your script. This import eliminates the risk of exposing plain-text passwords in your script.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>Example 3: Inspect the TypeNames property of a deserialized object</maml:title>
+        <dev:code>$original = [pscustomobject] @{
+    Timestamp = Get-Date
+    Label     = 'Meeting event'
+}
+$original | Add-Member -MemberType ScriptMethod -Name GetDisplay -Value {
+    '{0:yyyy-MM-dd HH:mm} {1}' -f $this.Timestamp, $this.Label
+}
+$original | Get-Member -MemberType ScriptMethod
+
+TypeName: System.Management.Automation.PSCustomObject
+
+Name        MemberType   Definition
+----        ----------   ----------
+Equals      Method       bool Equals(System.Object obj)
+GetHashCode Method       int GetHashCode()
+GetType     Method       type GetType()
+ToString    Method       string ToString()
+Label       NoteProperty string Label=Meeting event
+Timestamp   NoteProperty System.DateTime Timestamp=1/31/2024 2:27:59 PM
+GetDisplay  ScriptMethod System.Object GetDisplay();
+
+$original | Export-Clixml -Path event.clixml
+$deserialized = Import-CliXml -Path event.clixml
+$deserialized | Get-Member
+
+TypeName: Deserialized.System.Management.Automation.PSCustomObject
+
+Name        MemberType   Definition
+----        ----------   ----------
+Equals      Method       bool Equals(System.Object obj)
+GetHashCode Method       int GetHashCode()
+GetType     Method       type GetType()
+ToString    Method       string ToString()
+Label       NoteProperty string Label=Meeting event
+Timestamp   NoteProperty System.DateTime Timestamp=1/31/2024 2:27:59 PM</dev:code>
+        <dev:remarks>
+          <maml:para>Note that the type of the object in `$original` is System.Management.Automation.PSCustomObject , but the type of the object in `$deserialized` is Deserialized.System.Management.Automation.PSCustomObject . Also, the `GetDisplay()` method is missing from the deserialized object.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
@@ -20178,7 +20247,7 @@ Invoke-Expression $Example_code</dev:code>
           <maml:description>
             <maml:para>Specifies the digital public key certificate (X509) of a user account that has permission to send the request. Enter the certificate thumbprint of the certificate.</maml:para>
             <maml:para>Certificates are used in client certificate-based authentication. Certificates can only be mapped only to local user accounts, not domain accounts.</maml:para>
-            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certficate in `Cert:\CurrentUser\My`.</maml:para>
+            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certificate in `Cert:\CurrentUser\My`.</maml:para>
             <maml:para>&gt; [!NOTE] &gt; This feature is currently only supported on Windows OS platforms.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -20381,7 +20450,7 @@ Invoke-Expression $Example_code</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>OutFile</maml:name>
           <maml:description>
-            <maml:para>Saves the response body in the specified output file. Enter a path and file name. If you omit the path, the default is the current location. The name is treated as a literal path. Names that contain brackets (`[]`) must be enclosed in single quotes (`'`).</maml:para>
+            <maml:para>Saves the response body in the specified output file. Enter a path and filename. If you omit the path, the default is the current location. The name is treated as a literal path. Names that contain brackets (`[]`) must be enclosed in single quotes (`'`).</maml:para>
             <maml:para>By default, `Invoke-RestMethod` returns the results to the pipeline.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -20742,7 +20811,7 @@ Invoke-Expression $Example_code</dev:code>
           <maml:description>
             <maml:para>Specifies the digital public key certificate (X509) of a user account that has permission to send the request. Enter the certificate thumbprint of the certificate.</maml:para>
             <maml:para>Certificates are used in client certificate-based authentication. Certificates can only be mapped only to local user accounts, not domain accounts.</maml:para>
-            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certficate in `Cert:\CurrentUser\My`.</maml:para>
+            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certificate in `Cert:\CurrentUser\My`.</maml:para>
             <maml:para>&gt; [!NOTE] &gt; This feature is currently only supported on Windows OS platforms.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -20932,7 +21001,7 @@ Invoke-Expression $Example_code</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>OutFile</maml:name>
           <maml:description>
-            <maml:para>Saves the response body in the specified output file. Enter a path and file name. If you omit the path, the default is the current location. The name is treated as a literal path. Names that contain brackets (`[]`) must be enclosed in single quotes (`'`).</maml:para>
+            <maml:para>Saves the response body in the specified output file. Enter a path and filename. If you omit the path, the default is the current location. The name is treated as a literal path. Names that contain brackets (`[]`) must be enclosed in single quotes (`'`).</maml:para>
             <maml:para>By default, `Invoke-RestMethod` returns the results to the pipeline.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -21332,7 +21401,7 @@ Invoke-Expression $Example_code</dev:code>
           <maml:description>
             <maml:para>Specifies the digital public key certificate (X509) of a user account that has permission to send the request. Enter the certificate thumbprint of the certificate.</maml:para>
             <maml:para>Certificates are used in client certificate-based authentication. Certificates can only be mapped only to local user accounts, not domain accounts.</maml:para>
-            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certficate in `Cert:\CurrentUser\My`.</maml:para>
+            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certificate in `Cert:\CurrentUser\My`.</maml:para>
             <maml:para>&gt; [!NOTE] &gt; This feature is currently only supported on Windows OS platforms.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -21542,7 +21611,7 @@ Invoke-Expression $Example_code</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>OutFile</maml:name>
           <maml:description>
-            <maml:para>Saves the response body in the specified output file. Enter a path and file name. If you omit the path, the default is the current location. The name is treated as a literal path. Names that contain brackets (`[]`) must be enclosed in single quotes (`'`).</maml:para>
+            <maml:para>Saves the response body in the specified output file. Enter a path and filename. If you omit the path, the default is the current location. The name is treated as a literal path. Names that contain brackets (`[]`) must be enclosed in single quotes (`'`).</maml:para>
             <maml:para>By default, `Invoke-RestMethod` returns the results to the pipeline.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -21942,7 +22011,7 @@ Invoke-Expression $Example_code</dev:code>
           <maml:description>
             <maml:para>Specifies the digital public key certificate (X509) of a user account that has permission to send the request. Enter the certificate thumbprint of the certificate.</maml:para>
             <maml:para>Certificates are used in client certificate-based authentication. Certificates can only be mapped only to local user accounts, not domain accounts.</maml:para>
-            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certficate in `Cert:\CurrentUser\My`.</maml:para>
+            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certificate in `Cert:\CurrentUser\My`.</maml:para>
             <maml:para>&gt; [!NOTE] &gt; This feature is currently only supported on Windows OS platforms.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -22165,7 +22234,7 @@ Invoke-Expression $Example_code</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>OutFile</maml:name>
           <maml:description>
-            <maml:para>Saves the response body in the specified output file. Enter a path and file name. If you omit the path, the default is the current location. The name is treated as a literal path. Names that contain brackets (`[]`) must be enclosed in single quotes (`'`).</maml:para>
+            <maml:para>Saves the response body in the specified output file. Enter a path and filename. If you omit the path, the default is the current location. The name is treated as a literal path. Names that contain brackets (`[]`) must be enclosed in single quotes (`'`).</maml:para>
             <maml:para>By default, `Invoke-RestMethod` returns the results to the pipeline.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -22508,7 +22577,7 @@ Invoke-Expression $Example_code</dev:code>
         <maml:description>
           <maml:para>Specifies the digital public key certificate (X509) of a user account that has permission to send the request. Enter the certificate thumbprint of the certificate.</maml:para>
           <maml:para>Certificates are used in client certificate-based authentication. Certificates can only be mapped only to local user accounts, not domain accounts.</maml:para>
-          <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certficate in `Cert:\CurrentUser\My`.</maml:para>
+          <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certificate in `Cert:\CurrentUser\My`.</maml:para>
           <maml:para>&gt; [!NOTE] &gt; This feature is currently only supported on Windows OS platforms.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -22738,7 +22807,7 @@ Invoke-Expression $Example_code</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>OutFile</maml:name>
         <maml:description>
-          <maml:para>Saves the response body in the specified output file. Enter a path and file name. If you omit the path, the default is the current location. The name is treated as a literal path. Names that contain brackets (`[]`) must be enclosed in single quotes (`'`).</maml:para>
+          <maml:para>Saves the response body in the specified output file. Enter a path and filename. If you omit the path, the default is the current location. The name is treated as a literal path. Names that contain brackets (`[]`) must be enclosed in single quotes (`'`).</maml:para>
           <maml:para>By default, `Invoke-RestMethod` returns the results to the pipeline.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -23109,7 +23178,7 @@ Invoke-Expression $Example_code</dev:code>
         <maml:para>PowerShell includes the following aliases for `Invoke-RestMethod`:</maml:para>
         <maml:para>- All platforms:   - `irm`</maml:para>
         <maml:para>Some features may not be available on all platforms.</maml:para>
-        <maml:para>Because of changes in .NET Core 3.1, PowerShell 7.0 and higher use the HttpClient.DefaultProxy (/dotnet/api/system.net.http.httpclient.defaultproxy?view=netcore-3.1)property to determine the proxy configuration.</maml:para>
+        <maml:para>Because of changes in .NET Core 3.1, PowerShell 7.0 and higher use the HttpClient.DefaultProxy (xref:System.Net.Http.HttpClient.DefaultProxy*)property to determine the proxy configuration.</maml:para>
         <maml:para>The value of this property is different rules depending on your platform:</maml:para>
         <maml:para>- For Windows : Reads proxy configuration from environment variables or, if those are not   defined, from the user's proxy settings. - For macOS : Reads proxy configuration from environment variables or, if those are not defined,   from the system's proxy settings. - For Linux : Reads proxy configuration from environment variables or, in case those are not   defined, this property initializes a non-configured instance that bypasses all addresses.</maml:para>
         <maml:para>The environment variables used for `DefaultProxy` initialization on Windows and Unix-based platforms are:</maml:para>
@@ -23369,7 +23438,7 @@ Invoke-RestMethod -Uri $uri -HttpVersion 2.0 -SkipCertificateCheck</dev:code>
           <maml:description>
             <maml:para>Specifies the digital public key certificate (X509) of a user account that has permission to send the request. Enter the certificate thumbprint of the certificate.</maml:para>
             <maml:para>Certificates are used in client certificate-based authentication. Certificates can only be mapped only to local user accounts, not domain accounts.</maml:para>
-            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certficate in `Cert:\CurrentUser\My`.</maml:para>
+            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certificate in `Cert:\CurrentUser\My`.</maml:para>
             <maml:para>&gt; [!NOTE] &gt; This feature is only supported on Windows OS platforms.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -23899,7 +23968,7 @@ Invoke-RestMethod -Uri $uri -HttpVersion 2.0 -SkipCertificateCheck</dev:code>
           <maml:description>
             <maml:para>Specifies the digital public key certificate (X509) of a user account that has permission to send the request. Enter the certificate thumbprint of the certificate.</maml:para>
             <maml:para>Certificates are used in client certificate-based authentication. Certificates can only be mapped only to local user accounts, not domain accounts.</maml:para>
-            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certficate in `Cert:\CurrentUser\My`.</maml:para>
+            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certificate in `Cert:\CurrentUser\My`.</maml:para>
             <maml:para>&gt; [!NOTE] &gt; This feature is only supported on Windows OS platforms.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -24402,7 +24471,7 @@ Invoke-RestMethod -Uri $uri -HttpVersion 2.0 -SkipCertificateCheck</dev:code>
           <maml:description>
             <maml:para>Specifies the digital public key certificate (X509) of a user account that has permission to send the request. Enter the certificate thumbprint of the certificate.</maml:para>
             <maml:para>Certificates are used in client certificate-based authentication. Certificates can only be mapped only to local user accounts, not domain accounts.</maml:para>
-            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certficate in `Cert:\CurrentUser\My`.</maml:para>
+            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certificate in `Cert:\CurrentUser\My`.</maml:para>
             <maml:para>&gt; [!NOTE] &gt; This feature is only supported on Windows OS platforms.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -24953,7 +25022,7 @@ Invoke-RestMethod -Uri $uri -HttpVersion 2.0 -SkipCertificateCheck</dev:code>
           <maml:description>
             <maml:para>Specifies the digital public key certificate (X509) of a user account that has permission to send the request. Enter the certificate thumbprint of the certificate.</maml:para>
             <maml:para>Certificates are used in client certificate-based authentication. Certificates can only be mapped only to local user accounts, not domain accounts.</maml:para>
-            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certficate in `Cert:\CurrentUser\My`.</maml:para>
+            <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certificate in `Cert:\CurrentUser\My`.</maml:para>
             <maml:para>&gt; [!NOTE] &gt; This feature is only supported on Windows OS platforms.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -25459,7 +25528,7 @@ Invoke-RestMethod -Uri $uri -HttpVersion 2.0 -SkipCertificateCheck</dev:code>
         <maml:description>
           <maml:para>Specifies the digital public key certificate (X509) of a user account that has permission to send the request. Enter the certificate thumbprint of the certificate.</maml:para>
           <maml:para>Certificates are used in client certificate-based authentication. Certificates can only be mapped only to local user accounts, not domain accounts.</maml:para>
-          <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certficate in `Cert:\CurrentUser\My`.</maml:para>
+          <maml:para>To see the certificate thumbprint, use the `Get-Item` or `Get-ChildItem` command to find the certificate in `Cert:\CurrentUser\My`.</maml:para>
           <maml:para>&gt; [!NOTE] &gt; This feature is only supported on Windows OS platforms.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
@@ -25975,8 +26044,8 @@ Invoke-RestMethod -Uri $uri -HttpVersion 2.0 -SkipCertificateCheck</dev:code>
         <maml:para>PowerShell includes the following aliases for `Invoke-WebRequest`:</maml:para>
         <maml:para>- All platforms:   - `iwr`</maml:para>
         <maml:para>Beginning with PowerShell 6.0.0 `Invoke-WebRequest` supports basic parsing only.</maml:para>
-        <maml:para>For more information, see BasicHtmlWebResponseObject (/dotnet/api/microsoft.powershell.commands.basichtmlwebresponseobject).</maml:para>
-        <maml:para>Because of changes in .NET Core 3.1, PowerShell 7.0 and higher use the HttpClient.DefaultProxy (/dotnet/api/system.net.http.httpclient.defaultproxy?view=netcore-3.1)Property to determine the proxy configuration.</maml:para>
+        <maml:para>For more information, see BasicHtmlWebResponseObject (xref:Microsoft.PowerShell.Commands.BasicHtmlWebResponseObject).</maml:para>
+        <maml:para>Because of changes in .NET Core 3.1, PowerShell 7.0 and higher use the HttpClient.DefaultProxy (xref:System.Net.Http.HttpClient.DefaultProxy*)property to determine the proxy configuration.</maml:para>
         <maml:para>The value of this property is determined by your platform:</maml:para>
         <maml:para>- For Windows : Reads proxy configuration from environment variables. If those variables aren't   defined the property is derived from the user's proxy settings. - For macOS : Reads proxy configuration from environment variables. If those variables aren't   defined the property is derived from the system's proxy settings. - For Linux : Reads proxy configuration from environment variables. If those variables aren't   defined the property initializes a non-configured instance that bypasses all addresses.</maml:para>
         <maml:para>The environment variables used for `DefaultProxy` initialization on Windows and Unix-based platforms are:</maml:para>
@@ -28121,7 +28190,7 @@ Get-Alias -Name "C" | Format-List *</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>The cmdlet creates a Version 4 Universally Unique Identifier (UUID). For more information, see System.Guid.NewGuid (xref:System.Guid.NewGuid).</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -30240,14 +30309,14 @@ $P | Out-GridView</dev:code>
         <maml:title>Example 4: Save output to a variable, and then output a grid view</maml:title>
         <dev:code>($A = Get-ChildItem -Path $PSHOME -Recurse) | Out-GridView</dev:code>
         <dev:remarks>
-          <maml:para>`Get-ChildItem` gets all the files in the PowerShell installation directory and its subdirectories using the the `$PSHOME` automatic variable. The parentheses in the command establish the order of operations. As a result, the output from the `Get-ChildItem` command is saved in the `$A` variable before it is sent to `Out-GridView`.</maml:para>
+          <maml:para>`Get-ChildItem` gets all the files in the PowerShell installation directory and its subdirectories using the `$PSHOME` automatic variable. The parentheses in the command establish the order of operations. As a result, the output from the `Get-ChildItem` command is saved in the `$A` variable before it is sent to `Out-GridView`.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>Example 5: Output processes for a specified computer to a grid view</maml:title>
         <dev:code>Get-Process -ComputerName "Server01" | ogv -Title "Processes - Server01"</dev:code>
         <dev:remarks>
-          <maml:para>The examle uses `ogv`, which is the alias for the `Out-GridView` cmdlet. The Title parameter specifies the window title.</maml:para>
+          <maml:para>The example uses `ogv`, which is the alias for the `Out-GridView` cmdlet. The Title parameter specifies the window title.</maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
@@ -30926,7 +30995,7 @@ Normalized split cities array:
     <maml:description>
       <maml:para>The `Register-EngineEvent` cmdlet subscribes to events that are generated by the PowerShell engine and the `New-Event` cmdlet. Use the SourceIdentifier parameter to specify the event.</maml:para>
       <maml:para>You can use this cmdlet to subscribe to the OnIdle or Exiting engine events and events generated by the `New-Event` cmdlet. These events are automatically added to the event queue in your session without subscribing. However, subscribing lets you forward the events, specify an action to respond to the events, and cancel the subscription.</maml:para>
-      <maml:para>When you subscribe to a event, an event subscriber is added to your session. To get the event subscribers in the session, use the `Get-EventSubscriber` cmdlet. To cancel the subscription, use the `Unregister-Event` cmdlet, which deletes the event subscriber from the session.</maml:para>
+      <maml:para>When you subscribe to an event, an event subscriber is added to your session. To get the event subscribers in the session, use the `Get-EventSubscriber` cmdlet. To cancel the subscription, use the `Unregister-Event` cmdlet, which deletes the event subscriber from the session.</maml:para>
       <maml:para>When the subscribed event is raised, it is added to the event queue in your session. To get events in the event queue, use the `Get-Event` cmdlet.</maml:para>
     </maml:description>
     <command:syntax>
@@ -36311,7 +36380,7 @@ Select-Xml -Path $HOME\Documents\WindowsPowerShell\Snippets -Namespace $SnippetN
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>The `Send-MailMessage` cmdlet is obsolete. For more information, see Platform Compatibility note DE0005 (https://aka.ms/SendMailMessage). This cmdlet doesn't guarantee secure connections to SMTP servers. DE0005 suggests using the third-party library, MailKit (http://www.mimekit.net/). If you are using Exchange Online, you can use the Send-MgUserMail (/powershell/module/microsoft.graph.users.actions/send-mgusermail)from the Microsoft Graph PowerShell SDK.</maml:para>
+        <maml:para>The `Send-MailMessage` cmdlet is obsolete. For more information, see Platform Compatibility note DE0005 (https://aka.ms/SendMailMessage). This cmdlet doesn't guarantee secure connections to SMTP servers. DE0005 suggests using the third-party library, MailKit (https://github.com/jstedfast/MimeKit). If you are using Exchange Online, you can use the Send-MgUserMail (/powershell/module/microsoft.graph.users.actions/send-mgusermail)from the Microsoft Graph PowerShell SDK.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -36678,7 +36747,7 @@ Send-MailMessage @sendMailMessageSplat</dev:code>
           <maml:name>System.Management.Automation.AliasInfo</maml:name>
         </dev:type>
         <maml:description>
-          <maml:para>When you use the PassThru parameter, this cmdlet returns a AliasInfo object representing the alias.</maml:para>
+          <maml:para>When you use the PassThru parameter, this cmdlet returns an AliasInfo object representing the alias.</maml:para>
         </maml:description>
       </command:returnValue>
     </command:returnValues>
@@ -45399,7 +45468,7 @@ Write-Host "I won't print" 6&gt; $null</dev:code>
     <command:syntax>
       <command:syntaxItem>
         <maml:name>Write-Information</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="ByValue (True), ByName (False)" position="0" aliases="Msg, Message">
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Msg, Message">
           <maml:name>MessageData</maml:name>
           <maml:description>
             <maml:para>Specifies an informational message that you want to display to users as they run a script or command. For best results, enclose the informational message in quotation marks.</maml:para>
@@ -45411,7 +45480,7 @@ Write-Host "I won't print" 6&gt; $null</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="1" aliases="none">
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
           <maml:name>Tags</maml:name>
           <maml:description>
             <maml:para>One or more strings that you can use to sort and filter messages that you have added to the information stream with `Write-Information`. This parameter works similarly to the Tags parameter in `New-ModuleManifest`.</maml:para>
@@ -45426,7 +45495,7 @@ Write-Host "I won't print" 6&gt; $null</dev:code>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="ByValue (True), ByName (False)" position="0" aliases="Msg, Message">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="0" aliases="Msg, Message">
         <maml:name>MessageData</maml:name>
         <maml:description>
           <maml:para>Specifies an informational message that you want to display to users as they run a script or command. For best results, enclose the informational message in quotation marks.</maml:para>
@@ -45438,7 +45507,7 @@ Write-Host "I won't print" 6&gt; $null</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="ByValue (False), ByName (False)" position="1" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>Tags</maml:name>
         <maml:description>
           <maml:para>One or more strings that you can use to sort and filter messages that you have added to the information stream with `Write-Information`. This parameter works similarly to the Tags parameter in `New-ModuleManifest`.</maml:para>
@@ -46140,7 +46209,7 @@ $Events | ForEach-Object -Begin {
     Clear-Host
     # Set the $i counter variable to zero.
     $i = 0
-    # Set the $out variable to a empty string.
+    # Set the $out variable to an empty string.
     $out = ""
 } -Process {
     # In the Process script block search the message property of each incoming object for "bios".
