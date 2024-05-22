@@ -11,7 +11,7 @@
 # }
 
 
-# Starship prompt is enable so disable the above
+# Starship prompt is enabled so disable the above
 function Invoke-Starship-PreCommand {
   $loc = $executionContext.SessionState.Path.CurrentLocation;
   $prompt = "$([char]27)]9;12$([char]7)"
