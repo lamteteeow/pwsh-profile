@@ -19,7 +19,7 @@ $OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Obj
 . C:\Users\Admin\Documents\PowerShell\Scripts\chocolatey.ps1
 . C:\Users\Admin\Documents\PowerShell\Scripts\ya.ps1
 . C:\Users\Admin\Documents\PowerShell\Scripts\zoxide.ps1
-. C:\Users\Admin\Documents\PowerShell\Scripts\pyvenv.ps1
+# . C:\Users\Admin\Documents\PowerShell\Scripts\pyvenv.ps1 (switching to use uv for env management)
 . C:\Users\Admin\Documents\PowerShell\Scripts\mklink.ps1
 
 # Modules
