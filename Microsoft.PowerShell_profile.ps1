@@ -1,3 +1,5 @@
+# Run `Measure-Script -Top 5 $profile` (installed from Module `PSProfiler` to profile this
+
 Invoke-Expression (&starship init powershell)
 
 $ENV:STARSHIP_CONFIG = "$HOME\.config\starship.toml" # Default location
@@ -14,9 +16,9 @@ $OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Obj
 # Functions/Imports
 # . C:\Users\Admin\Documents\PowerShell\Scripts\sudo.ps1 (does not seem to work)
 . C:\Users\Admin\Documents\PowerShell\Scripts\basic_fn.ps1
-. C:\Users\Admin\Documents\PowerShell\Scripts\prompt.ps1
-. C:\Users\Admin\Documents\PowerShell\Scripts\psreadline.ps1
-. C:\Users\Admin\Documents\PowerShell\Scripts\chocolatey.ps1
+# . C:\Users\Admin\Documents\PowerShell\Scripts\prompt.ps1
+# . C:\Users\Admin\Documents\PowerShell\Scripts\psreadline.ps1
+# . C:\Users\Admin\Documents\PowerShell\Scripts\chocolatey.ps1
 . C:\Users\Admin\Documents\PowerShell\Scripts\ya.ps1
 . C:\Users\Admin\Documents\PowerShell\Scripts\zoxide.ps1
 # . C:\Users\Admin\Documents\PowerShell\Scripts\pyvenv.ps1 (switching to use uv for env management)

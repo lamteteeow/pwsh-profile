@@ -19,7 +19,7 @@ function touch ($file) { "" | Out-File $file -Encoding ascii }
 # List files with lsd in long format and show all files
 function ll { lsd -l -a }
 
-# List files with exa in tree format
+# List files with lsd in tree format
 function lt { lsd -l --tree }
 
 # Convert to JSON
