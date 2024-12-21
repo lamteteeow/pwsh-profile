@@ -22,7 +22,6 @@ $OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = New-Obj
 . C:\Users\Admin\Documents\PowerShell\Scripts\ya.ps1
 . C:\Users\Admin\Documents\PowerShell\Scripts\zoxide.ps1
 # . C:\Users\Admin\Documents\PowerShell\Scripts\pyvenv.ps1 (switching to use uv for env management)
-. C:\Users\Admin\Documents\PowerShell\Scripts\mklink.ps1
 
 # Modules
 
@@ -38,6 +37,6 @@ Import-Module -Name Terminal-Icons
 
 # Aliases
 # Set-Alias vi vim
-Set-Alias nvi neovide # nv is taken as New-Variable in pwsh
+# Set-Alias nvi neovide # nv is taken as New-Variable in pwsh
 # Set-Alias -Name 'cat' -Value 'bat' -Force -Option 'Constant', 'AllScope' # Not good practice to override bulit-in aliases
 

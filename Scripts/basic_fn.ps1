@@ -36,7 +36,7 @@ function ff($name) {
 }
 
 # Network Utilities
-function Get-PubIP { (Invoke-WebRequest http://ifconfig.me/ip).Content }
+function getpubip { (Invoke-WebRequest http://ifconfig.me/ip).Content }
 
 # Find and Replace with sed
 function sed($file, $find, $replace) {
@@ -51,4 +51,9 @@ function which($name) {
 # Kill process
 function pkill($name) {
     Get-Process $name -ErrorAction SilentlyContinue | Stop-Process
+}
+
+# Make symbolic link
+function mklink ($link, $target) {
+    New-Item -Path $link -ItemType SymbolicLink -Value $target
 }
