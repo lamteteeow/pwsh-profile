@@ -37,3 +37,5 @@ Get-ChildItem -Path $scriptPath -Filter *.ps1 | ForEach-Object { . $_.FullName }
     # Set-Alias -Name 'cat' -Value 'bat' -Force -Option 'Constant', 'AllScope' # Not good practice to override bulit-in aliases
     
 #f45873b3-b655-43a6-b217-97c00aa0db58
+(& uv generate-shell-completion powershell) | Out-String | Invoke-Expression
+(& uvx --generate-shell-completion powershell) | Out-String | Invoke-Expression
