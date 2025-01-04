@@ -28,12 +28,12 @@ function jj { $P | ConvertTo-Json -Depth 100 }
 # List USB devices
 function lsusb { Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -match '^USB' } | Format-Table -Wrap -AutoSize }
 
-# Find files
-function ff($name) {
-    Get-ChildItem -recurse -filter "*${name}*" -ErrorAction SilentlyContinue | ForEach-Object {
-        Write-Output "$($_.directory)\$($_)"
-    }
-}
+# Find files (use `fd` instead)
+# function ff($name) {
+#     Get-ChildItem -recurse -filter "*${name}*" -ErrorAction SilentlyContinue | ForEach-Object {
+#         Write-Output "$($_.directory)\$($_)"
+#     }
+# }
 
 # Network Utilities
 function getpubip { (Invoke-WebRequest http://ifconfig.me/ip).Content }

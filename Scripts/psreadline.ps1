@@ -2,10 +2,10 @@
 if (-not (Test-Path $PROFILE)) { $null = New-Item -Force $PROFILE }
 
 # Import PSReadLine
-if ($host.Name -eq 'ConsoleHost') {
-    Import-Module PSReadLine
-    Import-Module -Name Terminal-Icons
-}
+# if ($host.Name -eq 'ConsoleHost') {
+#     Import-Module PSReadLine
+#     Import-Module -Name Terminal-Icons
+# }
 
 # Change hint color to cyan
 Set-PSReadLineOption -Colors @{ 
@@ -30,6 +30,8 @@ Set-PSReadLineOption -Colors @{
     # ListPredictionSelected = $PSStyle.Background.FromRGB(0x93A1A1)
     # Selection              = $PSStyle.Background.FromRGB(0x00BFFF)
 }
+
+Set-PSReadLineKeyHandler -Chord "Tab" -Function ForwardWord
 
 # With these bindings, up arrow/down arrow will work like PowerShell/cmd if the current command line is blank.
 # If you've entered some text though, it will search the history for commands that start with the currently entered text.

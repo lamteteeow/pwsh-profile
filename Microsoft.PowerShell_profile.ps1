@@ -1,5 +1,4 @@
 # Run `Measure-Script -Top 5 $profile` (installed from Module `PSProfiler` to profile this
-
 # Initialize Starship prompt (~300ms)
 Invoke-Expression (&starship init powershell)
 
@@ -7,7 +6,7 @@ $ENV:STARSHIP_CONFIG = "$HOME\.config\starship.toml" # Default location
 
 $ENV:STARSHIP_CACHE = "$HOME\AppData\Local\Temp" # Logging
 
-$ENV:TERM = "xterm-256color"
+# $ENV:TERM = "xterm-256color"
 
 # Set default encoding to UTF8 (cmdlets such as Out-File and Set-Content will use UTF-8 encoding by default) (~5ms)
 # $PSDefaultParameterValues['*:Encoding'] = 'utf8'
